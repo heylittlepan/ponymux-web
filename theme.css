@@ -5,7 +5,7 @@
  * ladder as Sources/PonyMux/Theme.swift.
  */
 :root,
-:root[data-pony-theme="tokyonight"] {
+:root[data-pony-theme="tokyonight-night"] {
   color-scheme: dark;
   --pony-bg: #1a1b26;
   --pony-fg: #c0caf5;
@@ -18,81 +18,42 @@
   --pony-accent-ink: var(--pony-bg);
 }
 
-:root[data-pony-theme="catppuccin-mocha"] {
+:root[data-pony-theme="0x96f"] {
   color-scheme: dark;
-  --pony-bg: #1e1e2e;
-  --pony-fg: #cdd6f4;
-  --pony-accent: #89b4fa;
-  --pony-danger: #f38ba8;
-  --pony-success: #a6e3a1;
-  --pony-warning: #f9e2af;
-  --pony-magenta: #f5c2e7;
-  --pony-cyan: #94e2d5;
+  --pony-bg: #262427;
+  --pony-fg: #fcfcfa;
+  --pony-accent: #00cde8;
+  --pony-danger: #ff666d;
+  --pony-success: #b3e03a;
+  --pony-warning: #ffc739;
+  --pony-magenta: #a392e8;
+  --pony-cyan: #9deaf6;
   --pony-accent-ink: var(--pony-bg);
 }
 
-:root[data-pony-theme="rose-pine"] {
+:root[data-pony-theme="catppuccin-frappe"] {
   color-scheme: dark;
-  --pony-bg: #191724;
-  --pony-fg: #e0def4;
-  --pony-accent: #9ccfd8;
-  --pony-danger: #eb6f92;
-  --pony-success: #31748f;
-  --pony-warning: #f6c177;
-  --pony-magenta: #c4a7e7;
-  --pony-cyan: #ebbcba;
+  --pony-bg: #303446;
+  --pony-fg: #c6d0f5;
+  --pony-accent: #8caaee;
+  --pony-danger: #e78284;
+  --pony-success: #a6d189;
+  --pony-warning: #e5c890;
+  --pony-magenta: #f4b8e4;
+  --pony-cyan: #81c8be;
   --pony-accent-ink: var(--pony-bg);
 }
 
-:root[data-pony-theme="dracula"] {
-  color-scheme: dark;
-  --pony-bg: #282a36;
-  --pony-fg: #f8f8f2;
-  --pony-accent: #bd93f9;
-  --pony-danger: #ff5555;
-  --pony-success: #50fa7b;
-  --pony-warning: #f1fa8c;
-  --pony-magenta: #ff79c6;
-  --pony-cyan: #8be9fd;
-  --pony-accent-ink: var(--pony-bg);
-}
-
-:root[data-pony-theme="everforest-dark-hard"] {
-  color-scheme: dark;
-  --pony-bg: #1e2326;
-  --pony-fg: #d3c6aa;
-  --pony-accent: #7fbbb3;
-  --pony-danger: #e67e80;
-  --pony-success: #a7c080;
-  --pony-warning: #dbbc7f;
-  --pony-magenta: #d699b6;
-  --pony-cyan: #83c092;
-  --pony-accent-ink: var(--pony-bg);
-}
-
-:root[data-pony-theme="gruvbox-dark"] {
-  color-scheme: dark;
-  --pony-bg: #282828;
-  --pony-fg: #ebdbb2;
-  --pony-accent: #458588;
-  --pony-danger: #cc241d;
-  --pony-success: #98971a;
-  --pony-warning: #d79921;
-  --pony-magenta: #b16286;
-  --pony-cyan: #689d6a;
-  --pony-accent-ink: #000;
-}
-
-:root[data-pony-theme="rose-pine-dawn"] {
+:root[data-pony-theme="3024-day"] {
   color-scheme: light;
-  --pony-bg: #faf4ed;
-  --pony-fg: #575279;
-  --pony-accent: #56949f;
-  --pony-danger: #b4637a;
-  --pony-success: #286983;
-  --pony-warning: #ea9d34;
-  --pony-magenta: #907aa9;
-  --pony-cyan: #d7827e;
+  --pony-bg: #f7f7f7;
+  --pony-fg: #4a4543;
+  --pony-accent: #01a0e4;
+  --pony-danger: #db2d20;
+  --pony-success: #01a252;
+  --pony-warning: #caba00;
+  --pony-magenta: #a16a94;
+  --pony-cyan: #8fbece;
   --pony-accent-ink: #000;
 }
 
@@ -108,6 +69,19 @@
   --pony-magenta: #ea76cb;
   --pony-cyan: #179299;
   --pony-accent-ink: #fff;
+}
+
+:root[data-pony-theme="tokyonight-day"] {
+  color-scheme: light;
+  --pony-bg: #e1e2e7;
+  --pony-fg: #3760bf;
+  --pony-accent: #2e7de9;
+  --pony-danger: #f52a65;
+  --pony-success: #587539;
+  --pony-warning: #8c6c3e;
+  --pony-magenta: #9854f1;
+  --pony-cyan: #007197;
+  --pony-accent-ink: #000;
 }
 
 :root {
