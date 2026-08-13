@@ -7,9 +7,14 @@
     "build": "blume build",
     "doctor": "blume doctor",
     "check": "blume check",
-    "audit": "blume audit"
+    "audit": "blume audit",
+    "preview": "bun run build && wrangler dev",
+    "deploy": "bun run build && wrangler deploy"
   },
   "dependencies": {
     "blume": "^1.4.3"
+  },
+  "devDependencies": {
+    "wrangler": "^4.122.0"
   }
 }

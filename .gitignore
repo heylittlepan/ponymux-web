@@ -1,3 +1,6 @@
 node_modules/
 .blume/
 dist/
+.wrangler/
+.dev.vars*
+!.dev.vars.example
