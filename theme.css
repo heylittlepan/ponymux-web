@@ -141,9 +141,8 @@
   --pony-mark-shadow: color-mix(in srgb, var(--pony-accent) 20%, transparent);
 }
 
-#pony-mark #pony-head {
-  color: var(--pony-mark-head);
-}
+#pony-mark #pony-tile-layer { color: var(--pony-mark-tile); }
+#pony-mark #pony-head { color: var(--pony-mark-head); }
 
 html {
   scroll-behavior: smooth;
