@@ -15,6 +15,21 @@ export default defineConfig({
       { label: "Docs", path: "/docs" },
     ],
   },
+  analytics: {
+    scripts: [
+      {
+        src: "https://cloud.umami.is/script.js",
+        strategy: "defer",
+        attributes: {
+          "data-website-id": "78bc9b17-4037-4a3f-97cc-7241f6bc0285",
+          "data-domains": "ponymux.com",
+          "data-do-not-track": "true",
+          "data-exclude-hash": "true",
+          "data-performance": "true",
+        },
+      },
+    ],
+  },
   theme: {
     accent: { light: "#1e66f5", dark: "#7aa2f7" },
     action: "#7aa2f7",
