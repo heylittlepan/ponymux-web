@@ -18,10 +18,11 @@ export default defineConfig({
   analytics: {
     scripts: [
       {
-        src: "https://cloud.umami.is/script.js",
+        src: "/p/pony.js",
         strategy: "defer",
         attributes: {
           "data-website-id": "78bc9b17-4037-4a3f-97cc-7241f6bc0285",
+          "data-host-url": "/p",
           "data-domains": "ponymux.com",
           "data-do-not-track": "true",
           "data-exclude-hash": "true",
