@@ -1,0 +1,96 @@
+<script is:inline>
+  (() => {
+    const root = document.documentElement;
+    if (root.dataset.ponyNavGuard) return;
+    root.dataset.ponyNavGuard = "true";
+
+    const body = document.body;
+    const headerSelector = "[data-blume-header]";
+    const navOpenAttribute = "data-blume-nav-open";
+    let locked = false;
+    let lockedScrollY = 0;
+    let previousBodyStyle;
+
+    const rememberBodyStyle = () => ({
+      left: body.style.left,
+      overflow: body.style.overflow,
+      position: body.style.position,
+      right: body.style.right,
+      top: body.style.top,
+      width: body.style.width,
+    });
+
+    const lock = () => {
+      if (locked) return;
+      locked = true;
+      lockedScrollY = window.scrollY;
+      previousBodyStyle = rememberBodyStyle();
+
+      Object.assign(body.style, {
+        left: "0",
+        overflow: "hidden",
+        position: "fixed",
+        right: "0",
+        top: `-${lockedScrollY}px`,
+        width: "100%",
+      });
+
+      // Blume's default drawer handler locks the root element. Toggling root
+      // overflow can permanently detach position: sticky in iOS Safari, so
+      // keep the root scroll container unchanged and lock the body instead.
+      root.style.overflow = "";
+    };
+
+    const unlock = () => {
+      root.style.overflow = "";
+      if (!locked) return;
+
+      const previousRootScrollBehavior = root.style.scrollBehavior;
+      const previousBodyScrollBehavior = body.style.scrollBehavior;
+      root.style.setProperty("scroll-behavior", "auto", "important");
+      body.style.setProperty("scroll-behavior", "auto", "important");
+      getComputedStyle(root).scrollBehavior;
+
+      Object.assign(body.style, previousBodyStyle);
+      body.style.setProperty("scroll-behavior", "auto", "important");
+      locked = false;
+      const restoreY = lockedScrollY;
+      const restoreScrollPosition = () => {
+        window.scrollTo(0, restoreY);
+      };
+      restoreScrollPosition();
+
+      // Mobile Safari can schedule focus/scroll anchoring after the closing
+      // tap. Keep smooth scrolling disabled briefly so that late restoration
+      // does not animate the page up from zero.
+      requestAnimationFrame(() => {
+        restoreScrollPosition();
+        requestAnimationFrame(() => {
+          restoreScrollPosition();
+          document.querySelector(headerSelector)?.getBoundingClientRect();
+        });
+      });
+
+      window.setTimeout(() => {
+        restoreScrollPosition();
+        requestAnimationFrame(() => {
+          root.style.scrollBehavior = previousRootScrollBehavior;
+          body.style.scrollBehavior = previousBodyScrollBehavior;
+          document.querySelector(headerSelector)?.getBoundingClientRect();
+        });
+      }, 200);
+    };
+
+    const sync = () => {
+      if (root.hasAttribute(navOpenAttribute)) lock();
+      else unlock();
+    };
+
+    new MutationObserver(sync).observe(root, {
+      attributeFilter: [navOpenAttribute],
+      attributes: true,
+    });
+
+    sync();
+  })();
+</script>

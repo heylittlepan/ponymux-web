@@ -1,6 +1,7 @@
 ---
 import PageLayout from "blume/components/layout/PageLayout.astro";
 import data from "blume:data";
+import MobileNavGuard from "../components/MobileNavGuard.astro";
 import ThemePicker from "../components/ThemePicker.astro";
 import PageFooter from "./_shared/PageFooter.astro";
 
@@ -27,6 +28,7 @@ const { config } = data;
   }}
 >
   <ThemePicker />
+  <MobileNavGuard />
   <main>
     <section class="hero shell">
       <div class="hero-copy">
