@@ -26,6 +26,7 @@ const { config } = data;
     route: "/",
   }}
 >
+  <ThemePicker />
   <main>
     <section class="hero shell">
       <div class="hero-copy">
@@ -95,7 +96,11 @@ const { config } = data;
             </section>
           </div>
         </div>
-        <ThemePicker variant="inline" />
+        <button aria-label="Change website theme" class="product-theme-note" data-pony-open-theme type="button">
+          <span>The whole page is wearing <b data-pony-current>TokyoNight Night</b>.</span>
+          <span aria-hidden="true" class="product-theme-dots"><i></i><i></i><i></i></span>
+          <em>Change</em>
+        </button>
       </div>
     </section>
 
@@ -201,6 +206,7 @@ const { config } = data;
   .terminal { position: relative; min-width: 0; background: var(--pony-bg); font-family: var(--blume-font-mono); }.terminal header { height: 48px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; border-bottom: 1px solid var(--pony-border); color: var(--pony-fg-secondary); font-family: var(--blume-font-body); font-size: 12px; }.terminal header div { color: var(--pony-fg-icon); }
   .terminal-copy { padding: 34px 32px; font-size: 13px; line-height: 1.8; }.terminal-copy p { margin: 0 0 10px; }.terminal-copy .muted { color: var(--pony-fg-tertiary); }.prompt { color: var(--pony-success); margin-right: 8px; }.agent-line { color: var(--pony-fg-secondary); padding-left: 18px; }.success { color: var(--pony-success); }.cursor { display: inline-block; width: 7px; height: 16px; background: var(--pony-fg); vertical-align: -3px; animation: blink 1s steps(1) infinite; }
   .memory { position: absolute; left: 28px; right: 28px; bottom: 28px; display: flex; gap: 12px; align-items: center; padding: 14px 16px; border: 1px solid color-mix(in srgb, var(--pony-accent) 22%, var(--pony-border)); border-radius: 12px; background: linear-gradient(135deg, color-mix(in srgb, var(--pony-accent) 10%, var(--pony-bg)), var(--pony-surface)); box-shadow: var(--pony-shadow-floating); font-family: var(--blume-font-body); }.memory > span { color: var(--pony-accent); }.memory b, .memory small { display: block; }.memory b { font-size: 11px; }.memory small { margin-top: 4px; color: var(--pony-fg-tertiary); font-size: 9px; }
+  .product-theme-note { display: flex; align-items: center; gap: 9px; margin: 16px auto 0; padding: 0; border: 0; color: var(--pony-fg-secondary); background: transparent; font: 11px var(--blume-font-body); cursor: pointer; }.product-theme-note b { color: var(--pony-fg); }.product-theme-note em { color: var(--pony-accent); font-style: normal; font-weight: 700; }.product-theme-note:hover em { text-decoration: underline; }.product-theme-note:focus-visible { outline: 2px solid var(--pony-accent); outline-offset: 5px; border-radius: 3px; }.product-theme-dots { width: 24px; display: inline-flex; justify-content: center; }.product-theme-dots i { width: 8px; height: 8px; margin-left: -2px; border: 1.5px solid var(--pony-bg); border-radius: 50%; }.product-theme-dots i:first-child { margin-left: 0; background: var(--pony-accent); }.product-theme-dots i:nth-child(2) { background: var(--pony-success); }.product-theme-dots i:nth-child(3) { background: var(--pony-warning); }
   .manifesto { padding: 140px 0 120px; text-align: center; }
   h2 { margin: 18px 0 26px; font-size: clamp(40px, 6vw, 68px); line-height: 1.04; font-weight: 720; }
   .manifesto-copy { max-width: 720px; margin: auto; color: var(--blume-muted-foreground); font-size: 19px; line-height: 1.7; }
@@ -218,6 +224,6 @@ const { config } = data;
     .app-window { height: 560px; }.app-body{grid-template-columns:56px 240px 1fr}.terminal-copy{padding:26px 22px;font-size:11px}.memory{left:18px;right:18px}.principle.large{grid-template-columns:1fr;gap:32px}.closing{grid-template-columns:auto 1fr}.closing .primary{grid-column:1/-1}.comparison{grid-template-columns:1fr}.arrow{padding:14px;transform:rotate(90deg)}
   }
   @media (max-width: 700px) {
-    .hero{padding-top:64px}.actions{flex-direction:column}.app-window{height:540px}.app-body{grid-template-columns:52px 1fr}.terminal{display:none}.principles{grid-template-columns:1fr}.principle.large{grid-column:auto}.comparison-item{padding:18px}.manifesto{padding:100px 0}.closing{grid-template-columns:1fr;text-align:center}.closing img{margin:auto}.closing .primary{grid-column:auto}.reactions span{width:50px;height:50px}.sessions{border-right:0}
+    .hero{padding-top:64px}.actions{flex-direction:column}.app-window{height:540px}.app-body{grid-template-columns:52px 1fr}.terminal{display:none}.product-theme-note{max-width:300px;flex-wrap:wrap;justify-content:center;line-height:1.5}.principles{grid-template-columns:1fr}.principle.large{grid-column:auto}.comparison-item{padding:18px}.manifesto{padding:100px 0}.closing{grid-template-columns:1fr;text-align:center}.closing img{margin:auto}.closing .primary{grid-column:auto}.reactions span{width:50px;height:50px}.sessions{border-right:0}
   }
 </style>

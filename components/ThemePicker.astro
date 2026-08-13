@@ -1,9 +1,4 @@
 ---
-interface Props {
-  variant?: "header" | "inline";
-}
-
-const { variant = "header" } = Astro.props;
 const themes = [
   {
     id: "0x96f",
@@ -61,34 +56,20 @@ const themes = [
   },
 ];
 
-const panelId = `pony-theme-panel-${variant}`;
+const panelId = "pony-theme-panel";
 ---
 
-<div class:list={["theme-picker", variant]} data-pony-theme-picker>
-  {variant === "inline" ? (
-    <button
-      aria-controls={panelId}
-      aria-expanded="false"
-      class="inline-trigger"
-      data-pony-theme-trigger
-      type="button"
-    >
-      <span>The whole page is wearing <b data-pony-current>TokyoNight Night</b>.</span>
-      <span aria-hidden="true" class="theme-dots"><i></i><i></i><i></i></span>
-      <em>Change</em>
-    </button>
-  ) : (
-    <button
-      aria-controls={panelId}
-      aria-expanded="false"
-      aria-label="Change website theme"
-      class="header-trigger"
-      data-pony-theme-trigger
-      type="button"
-    >
-      <span aria-hidden="true" class="theme-dots"><i></i><i></i><i></i></span>
-    </button>
-  )}
+<div class="theme-picker" data-pony-theme-picker>
+  <button
+    aria-controls={panelId}
+    aria-expanded="false"
+    aria-label="Change website theme"
+    class="header-trigger"
+    data-pony-theme-trigger
+    type="button"
+  >
+    <span aria-hidden="true" class="theme-dots"><i></i><i></i><i></i></span>
+  </button>
 
   <section aria-label="Choose a PonyMux theme" class="theme-panel" hidden id={panelId}>
     <header>
@@ -202,9 +183,7 @@ const panelId = `pony-theme-panel-${variant}`;
 </script>
 
 <style>
-  .theme-picker { z-index: 80; color: var(--pony-fg); font-family: var(--blume-font-body); }
-  .theme-picker.header { position: fixed; top: 14px; right: max(18px, env(safe-area-inset-right)); }
-  .theme-picker.inline { position: relative; display: flex; justify-content: center; margin-top: 16px; }
+  .theme-picker { position: fixed; top: 14px; right: max(18px, env(safe-area-inset-right)); z-index: 80; color: var(--pony-fg); font-family: var(--blume-font-body); }
   button { font: inherit; }
 
   .header-trigger {
@@ -221,22 +200,6 @@ const panelId = `pony-theme-panel-${variant}`;
   }
   .header-trigger:hover,
   .header-trigger:focus-visible { background: var(--pony-surface-hover); outline: none; }
-
-  .inline-trigger {
-    display: inline-flex;
-    align-items: center;
-    gap: 9px;
-    padding: 0;
-    border: 0;
-    color: var(--pony-fg-secondary);
-    background: transparent;
-    font-size: 11px;
-    cursor: pointer;
-  }
-  .inline-trigger b { color: var(--pony-fg); font-weight: 700; }
-  .inline-trigger em { color: var(--pony-accent); font-style: normal; font-weight: 700; }
-  .inline-trigger:hover em, .inline-trigger:focus-visible em { text-decoration: underline; }
-  .inline-trigger:focus-visible { outline: 2px solid var(--pony-accent); outline-offset: 5px; border-radius: 3px; }
 
   .theme-dots { width: 24px; display: inline-flex; align-items: center; justify-content: center; }
   .theme-dots i { width: 8px; height: 8px; margin-left: -2px; border: 1.5px solid var(--pony-bg); border-radius: 50%; }
@@ -255,8 +218,7 @@ const panelId = `pony-theme-panel-${variant}`;
     box-shadow: var(--pony-shadow-lifted);
     backdrop-filter: blur(22px) saturate(1.2);
   }
-  .header .theme-panel { top: calc(100% + 9px); right: 0; }
-  .inline .theme-panel { top: calc(100% + 12px); left: 50%; transform: translateX(-50%); }
+  .theme-panel { top: calc(100% + 9px); right: 0; }
   .theme-panel[hidden] { display: none; }
   .theme-panel header { display: flex; justify-content: space-between; align-items: start; padding: 4px 5px 9px; }
   .theme-panel header strong, .theme-panel header span { display: block; }
@@ -296,8 +258,6 @@ const panelId = `pony-theme-panel-${variant}`;
   .preview-dots i:nth-child(4) { background: var(--preview-fg); }
 
   @media (max-width: 520px) {
-    .theme-picker.header { top: 14px; right: 12px; }
-    .inline-trigger { max-width: 300px; flex-wrap: wrap; line-height: 1.5; }
-    .inline .theme-panel { top: calc(100% + 10px); }
+    .theme-picker { top: 14px; right: 12px; }
   }
 </style>
