@@ -183,7 +183,7 @@ const panelId = "pony-theme-panel";
 </script>
 
 <style>
-  .theme-picker { position: fixed; top: 14px; right: max(18px, env(safe-area-inset-right)); z-index: 80; color: var(--pony-fg); font-family: var(--blume-font-body); }
+  .theme-picker { position: fixed; top: 14px; inset-inline-end: max(18px, env(safe-area-inset-right)); z-index: 80; color: var(--pony-fg); font-family: var(--blume-font-body); }
   button { font: inherit; }
 
   .header-trigger {
@@ -258,6 +258,6 @@ const panelId = "pony-theme-panel";
   .preview-dots i:nth-child(4) { background: var(--preview-fg); }
 
   @media (max-width: 520px) {
-    .theme-picker { top: 14px; right: 12px; }
+    .theme-picker { top: 14px; inset-inline-end: 12px; }
   }
 </style>

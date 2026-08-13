@@ -136,6 +136,18 @@ body,
   transition: background-color .24s ease, border-color .24s ease, color .24s ease;
 }
 
+/* The theme control visually belongs to the header, so reserve a real slot for
+   it instead of letting it float over Search or future header actions. */
+[data-blume-header] {
+  padding-inline-end: 4rem;
+}
+
+@media (min-width: 768px) {
+  [data-blume-header] {
+    padding-inline-end: 4.5rem;
+  }
+}
+
 [data-blume-theme-toggle] {
   display: none !important;
 }
