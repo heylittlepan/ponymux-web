@@ -1,0 +1,58 @@
+<footer class="site-footer">
+  <div>
+    <a class="brand" href="/">PonyMux</a>
+    <p>More agents. Less terminal chaos.</p>
+  </div>
+  <nav aria-label="Footer navigation">
+    <a href="/blog">Blog</a>
+    <a href="/docs">Docs</a>
+    <a href="/llms.txt">llms.txt</a>
+  </nav>
+</footer>
+
+<style>
+  .site-footer {
+    width: min(1120px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 42px 0 56px;
+    border-top: 1px solid var(--blume-border);
+    display: flex;
+    justify-content: space-between;
+    gap: 32px;
+  }
+
+  .brand {
+    color: var(--blume-foreground);
+    font-family: var(--blume-font-display);
+    font-weight: 750;
+    text-decoration: none;
+  }
+
+  p {
+    margin: 6px 0 0;
+    color: var(--blume-muted-foreground);
+    font-size: 14px;
+  }
+
+  nav {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  nav a {
+    color: var(--blume-muted-foreground);
+    font-size: 14px;
+    text-decoration: none;
+  }
+
+  nav a:hover {
+    color: var(--blume-foreground);
+  }
+
+  @media (max-width: 640px) {
+    .site-footer {
+      flex-direction: column;
+    }
+  }
+</style>

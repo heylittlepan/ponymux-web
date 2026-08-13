@@ -15,6 +15,7 @@
     "blume": "^1.4.3"
   },
   "devDependencies": {
+    "@types/node": "^26.2.0",
     "wrangler": "^4.122.0"
   }
 }

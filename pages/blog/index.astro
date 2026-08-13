@@ -1,0 +1,80 @@
+---
+import { getCollection } from "astro:content";
+import PageLayout from "blume/components/layout/PageLayout.astro";
+import data from "blume:data";
+import PageFooter from "../_shared/PageFooter.astro";
+
+const { config } = data;
+const routeById = new Map(data.routes.map((route) => [route.id, route.path]));
+const posts = (await getCollection("docs"))
+  .filter((entry) => entry.data.type === "blog" && !entry.data.draft)
+  .map((entry) => ({
+    date: entry.data.date,
+    description: entry.data.description,
+    href: routeById.get(entry.id),
+    title: entry.data.title,
+  }))
+  .toSorted((a, b) => Number(new Date(b.date)) - Number(new Date(a.date)));
+---
+
+<PageLayout
+  site={{ title: config.title, description: config.description }}
+  logo={config.logo}
+  analytics={config.analytics}
+  navigation={data.navigation}
+  favicon={config.favicon}
+  fontCssVars={data.fontCssVars}
+  themeMode={config.theme.mode}
+  searchEnabled={false}
+  askEnabled={false}
+  siteUrl={config.site}
+  ogEnabled={config.og.enabled}
+  page={{
+    title: "Build notes — PonyMux",
+    description: "Product decisions, interface experiments, and honest build notes from creating PonyMux, a native Mac terminal for coding agents.",
+    route: "/blog",
+  }}
+>
+  <main class="blog-shell">
+    <header>
+      <p>BUILD NOTES</p>
+      <h1>Building PonyMux,<br />with a point of view.</h1>
+      <div class="intro">Product decisions, design experiments, and lessons from making a calmer terminal for the agent era.</div>
+    </header>
+
+    {posts.length ? (
+      <div class="post-list">
+        {posts.map((post) => (
+          <article>
+            <time>{post.date && new Date(post.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</time>
+            <div><h2><a href={post.href}>{post.title}</a></h2><p>{post.description}</p></div>
+            <a class="arrow" href={post.href} aria-label={`Read ${post.title}`}>→</a>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <section class="empty">
+        <span>✦</span>
+        <h2>The first note is being written.</h2>
+        <p>No content treadmill. We will publish when there is something worth saying.</p>
+        <a href="/">Back to PonyMux</a>
+      </section>
+    )}
+  </main>
+  <PageFooter slot="footer" />
+</PageLayout>
+
+<style>
+  .blog-shell { width: min(960px, calc(100% - 40px)); margin: 0 auto; padding: 110px 0 130px; }
+  header { max-width: 790px; }
+  header > p { color: var(--blume-accent); font-size: 12px; font-weight: 750; letter-spacing: .13em; }
+  h1 { margin: 20px 0 28px; color: var(--blume-foreground); font: 750 clamp(48px,7vw,78px)/1 var(--blume-font-display); letter-spacing: -.055em; }
+  .intro { max-width: 650px; color: var(--blume-muted-foreground); font-size: 19px; line-height: 1.65; }
+  .post-list { margin-top: 90px; border-top: 1px solid var(--blume-border); }
+  article { display: grid; grid-template-columns: 150px 1fr auto; gap: 30px; align-items: start; padding: 32px 0; border-bottom: 1px solid var(--blume-border); }
+  time { color: var(--blume-muted-foreground); font: 11px var(--blume-font-mono); text-transform: uppercase; }
+  h2 { margin: 0; font: 700 27px/1.2 var(--blume-font-display); letter-spacing: -.03em; } h2 a { color: var(--blume-foreground); text-decoration: none; }
+  article p { margin: 10px 0 0; color: var(--blume-muted-foreground); line-height: 1.6; }.arrow { color: var(--blume-accent); text-decoration: none; font-size: 24px; }
+  .empty { margin-top: 88px; padding: 64px; border: 1px solid var(--blume-border); border-radius: 22px; background: var(--blume-muted); text-align: center; }.empty > span { color: var(--blume-accent); font-size: 26px; }.empty h2 { margin: 18px 0 10px; font-size: 28px; }.empty p { color: var(--blume-muted-foreground); }.empty a { display:inline-block;margin-top:20px;color:var(--blume-foreground);font-weight:700; }
+  @media(max-width:640px){.blog-shell{padding-top:72px}article{grid-template-columns:1fr;gap:10px}.empty{padding:42px 22px}}
+</style>

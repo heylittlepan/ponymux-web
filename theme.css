@@ -1,0 +1,32 @@
+:root {
+  --blume-background: #f7f5f0;
+  --blume-foreground: #18181f;
+  --blume-muted: #ece9e2;
+  --blume-muted-foreground: #686871;
+  --blume-border: #dedbd4;
+  --blume-accent: #1478ff;
+  --blume-action: #1478ff;
+}
+
+:root[data-theme="dark"] {
+  --blume-background: #111117;
+  --blume-foreground: #f4f2ec;
+  --blume-muted: #1b1b22;
+  --blume-muted-foreground: #a3a3ad;
+  --blume-border: #2c2c34;
+  --blume-accent: #65a7ff;
+  --blume-action: #65a7ff;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  letter-spacing: -0.01em;
+}
+
+::selection {
+  color: white;
+  background: #1478ff;
+}
