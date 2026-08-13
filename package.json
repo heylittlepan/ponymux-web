@@ -1,0 +1,15 @@
+{
+  "name": "ponymux-web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "blume dev",
+    "build": "blume build",
+    "doctor": "blume doctor",
+    "check": "blume check",
+    "audit": "blume audit"
+  },
+  "dependencies": {
+    "blume": "^1.4.3"
+  }
+}
