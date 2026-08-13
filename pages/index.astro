@@ -52,11 +52,11 @@ const { config } = data;
           </div>
           <div class="app-body">
             <aside class="rail">
-              <img src="/favicon.png" alt="" width="36" height="36" />
+              <span class="pony-mark" aria-hidden="true"></span>
               <button class="rail-active">⌁</button>
               <button>◇</button>
               <button>⌕</button>
-              <span></span>
+              <span class="rail-spacer"></span>
               <button>⚙</button>
             </aside>
             <section class="sessions">
@@ -197,7 +197,8 @@ const { config } = data;
   .status { justify-self: end; color: var(--pony-fg-tertiary); }
   .app-body { display: grid; grid-template-columns: 64px 310px 1fr; height: calc(100% - 50px); }
   .rail { padding: 18px 12px; display: flex; flex-direction: column; align-items: center; gap: 10px; background: var(--pony-surface); border-right: 1px solid var(--pony-border); }
-  .rail img { border-radius: 10px; margin-bottom: 8px; }.rail button { border: 0; width: 38px; height: 38px; border-radius: 10px; color: var(--pony-fg-icon); background: transparent; }.rail .rail-active { color: var(--pony-fg); background: var(--pony-surface-selected); }.rail span { flex: 1; }
+  .rail .pony-mark { flex: 0 0 36px; width: 36px; height: 36px; margin-bottom: 8px; background: var(--pony-accent); -webkit-mask: url("/pony-mark.svg") center / contain no-repeat; mask: url("/pony-mark.svg") center / contain no-repeat; }
+  .rail button { border: 0; width: 38px; height: 38px; border-radius: 10px; color: var(--pony-fg-icon); background: transparent; }.rail .rail-active { color: var(--pony-fg); background: var(--pony-surface-selected); }.rail .rail-spacer { flex: 1; }
   .sessions { background: color-mix(in srgb, var(--pony-fg) 3%, var(--pony-bg)); border-right: 1px solid var(--pony-border); padding: 16px 12px; }
   .session-head { display: flex; justify-content: space-between; align-items: center; padding: 2px 8px 14px; }.session-head button { border: 0; color: var(--pony-fg-icon); background: transparent; font-size: 18px; }
   .facet-row { display: flex; gap: 5px; margin: 0 5px 14px; }.facet-row span { padding: 5px 9px; border-radius: 7px; color: var(--pony-fg-tertiary); font-size: 10px; }.facet-row .active { color: var(--pony-fg); background: var(--pony-surface-selected); }

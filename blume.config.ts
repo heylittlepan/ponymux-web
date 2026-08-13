@@ -5,7 +5,7 @@ export default defineConfig({
   description:
     "PonyMux is a lightweight native Mac terminal for managing more coding agents and sessions without split-pane clutter.",
   logo: {
-    image: "/favicon.png",
+    image: "/pony-mark.svg",
     text: "PonyMux",
     href: "/",
   },
