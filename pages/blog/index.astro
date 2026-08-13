@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import PageLayout from "blume/components/layout/PageLayout.astro";
 import data from "blume:data";
+import ThemePicker from "../../components/ThemePicker.astro";
 import PageFooter from "../_shared/PageFooter.astro";
 
 const { config } = data;
@@ -35,6 +36,7 @@ const posts = (await getCollection("docs"))
     route: "/blog",
   }}
 >
+  <ThemePicker />
   <main class="blog-shell">
     <header>
       <p>BUILD NOTES</p>

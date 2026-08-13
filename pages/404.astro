@@ -1,0 +1,42 @@
+---
+import PageLayout from "blume/components/layout/PageLayout.astro";
+import data from "blume:data";
+import ThemePicker from "../components/ThemePicker.astro";
+import PageFooter from "./_shared/PageFooter.astro";
+
+const { config } = data;
+---
+
+<PageLayout
+  site={{ title: config.title, description: config.description }}
+  logo={config.logo}
+  analytics={config.analytics}
+  navigation={data.navigation}
+  favicon={config.favicon}
+  fontCssVars={data.fontCssVars}
+  themeMode={config.theme.mode}
+  searchEnabled={false}
+  askEnabled={false}
+  siteUrl={config.site}
+  ogEnabled={false}
+  noindex
+  page={{ title: "Window not found — PonyMux", route: "/404" }}
+>
+  <ThemePicker />
+  <main class="not-found">
+    <p>404 · NO SESSION HERE</p>
+    <h1>This window wandered off.</h1>
+    <div>Nothing crashed. There is simply no page at this address.</div>
+    <a href="/">Back to PonyMux <span>→</span></a>
+  </main>
+  <PageFooter slot="footer" />
+</PageLayout>
+
+<style>
+  .not-found { width: min(820px, calc(100% - 40px)); min-height: calc(100vh - 260px); display: flex; flex-direction: column; justify-content: center; margin: auto; padding: 90px 0 120px; }
+  p { margin: 0; color: var(--pony-accent); font: 700 11px var(--blume-font-mono); letter-spacing: .12em; }
+  h1 { max-width: 720px; margin: 20px 0; color: var(--pony-fg); font: 750 clamp(50px, 8vw, 88px)/.98 var(--blume-font-display); letter-spacing: -.055em; }
+  div { max-width: 540px; color: var(--pony-fg-secondary); font-size: 18px; line-height: 1.6; }
+  a { width: fit-content; margin-top: 34px; color: var(--pony-fg); font-weight: 700; text-decoration: none; }
+  a span { margin-left: 8px; color: var(--pony-accent); }
+</style>

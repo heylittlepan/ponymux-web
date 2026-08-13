@@ -1,0 +1,313 @@
+---
+const themes = [
+  {
+    id: "tokyonight",
+    name: "TokyoNight",
+    mode: "dark",
+    bg: "#1a1b26",
+    fg: "#c0caf5",
+    accent: "#7aa2f7",
+    green: "#9ece6a",
+  },
+  {
+    id: "catppuccin-mocha",
+    name: "Catppuccin Mocha",
+    mode: "dark",
+    bg: "#1e1e2e",
+    fg: "#cdd6f4",
+    accent: "#89b4fa",
+    green: "#a6e3a1",
+  },
+  {
+    id: "rose-pine",
+    name: "Rose Pine",
+    mode: "dark",
+    bg: "#191724",
+    fg: "#e0def4",
+    accent: "#9ccfd8",
+    green: "#31748f",
+  },
+  {
+    id: "dracula",
+    name: "Dracula",
+    mode: "dark",
+    bg: "#282a36",
+    fg: "#f8f8f2",
+    accent: "#bd93f9",
+    green: "#50fa7b",
+  },
+  {
+    id: "everforest-dark-hard",
+    name: "Everforest Dark Hard",
+    mode: "dark",
+    bg: "#1e2326",
+    fg: "#d3c6aa",
+    accent: "#7fbbb3",
+    green: "#a7c080",
+  },
+  {
+    id: "gruvbox-dark",
+    name: "Gruvbox Dark",
+    mode: "dark",
+    bg: "#282828",
+    fg: "#ebdbb2",
+    accent: "#458588",
+    green: "#98971a",
+  },
+  {
+    id: "rose-pine-dawn",
+    name: "Rose Pine Dawn",
+    mode: "light",
+    bg: "#faf4ed",
+    fg: "#575279",
+    accent: "#56949f",
+    green: "#286983",
+  },
+  {
+    id: "catppuccin-latte",
+    name: "Catppuccin Latte",
+    mode: "light",
+    bg: "#eff1f5",
+    fg: "#4c4f69",
+    accent: "#1e66f5",
+    green: "#40a02b",
+  },
+];
+---
+
+<div class="theme-picker" data-pony-theme-picker>
+  <button
+    aria-controls="pony-theme-panel"
+    aria-expanded="false"
+    class="theme-trigger"
+    data-pony-theme-trigger
+    type="button"
+  >
+    <span aria-hidden="true" class="theme-orbit">
+      <i></i><i></i><i></i>
+    </span>
+    <span data-pony-current>TokyoNight</span>
+    <span aria-hidden="true" class="chevron">⌃</span>
+  </button>
+
+  <section aria-label="Choose a PonyMux theme" class="theme-panel" hidden id="pony-theme-panel">
+    <header>
+      <div>
+        <strong>Dress the whole window</strong>
+        <span>A handful from 485 app themes</span>
+      </div>
+      <button aria-label="Close theme picker" data-pony-theme-close type="button">×</button>
+    </header>
+    <div class="theme-grid">
+      {themes.map((theme) => (
+        <button
+          aria-label={`Use ${theme.name} theme`}
+          aria-pressed="false"
+          class="theme-option"
+          data-mode={theme.mode}
+          data-name={theme.name}
+          data-pony-theme-option={theme.id}
+          style={`--preview-bg:${theme.bg};--preview-fg:${theme.fg};--preview-accent:${theme.accent};--preview-green:${theme.green}`}
+          type="button"
+        >
+          <span aria-hidden="true" class="mini-terminal">
+            <i></i><i></i><i></i>
+            <b>›</b><em>agent ready</em><small>✓</small>
+          </span>
+          <span class="theme-name">{theme.name}</span>
+          <span class="theme-mode">{theme.mode}</span>
+        </button>
+      ))}
+    </div>
+  </section>
+</div>
+
+<script is:inline>
+  (() => {
+    const picker = document.querySelector("[data-pony-theme-picker]");
+    if (!picker || picker.dataset.ready) return;
+    picker.dataset.ready = "true";
+
+    const root = document.documentElement;
+    const panel = picker.querySelector(".theme-panel");
+    const trigger = picker.querySelector("[data-pony-theme-trigger]");
+    const options = [...picker.querySelectorAll("[data-pony-theme-option]")];
+    const fallback = options[0];
+
+    const readStored = () => {
+      try { return localStorage.getItem("ponymux-theme"); } catch { return null; }
+    };
+
+    const remember = (id, mode) => {
+      try {
+        localStorage.setItem("ponymux-theme", id);
+        localStorage.setItem("blume-theme", mode);
+      } catch {}
+    };
+
+    const apply = (option, persist = true) => {
+      if (!option) option = fallback;
+      const id = option.dataset.ponyThemeOption;
+      const name = option.dataset.name;
+      const mode = option.dataset.mode;
+      root.dataset.ponyTheme = id;
+      root.dataset.theme = mode;
+      root.style.colorScheme = mode;
+      options.forEach((item) => item.setAttribute("aria-pressed", String(item === option)));
+      document.querySelectorAll("[data-pony-current]").forEach((node) => { node.textContent = name; });
+      document.querySelectorAll("[data-pony-current-mode]").forEach((node) => { node.textContent = mode; });
+      let meta = document.querySelector('meta[name="theme-color"]');
+      if (!meta) {
+        meta = document.createElement("meta");
+        meta.name = "theme-color";
+        document.head.append(meta);
+      }
+      meta.content = getComputedStyle(root).getPropertyValue("--pony-bg").trim();
+      if (persist) remember(id, mode);
+      requestAnimationFrame(() => root.dataset.ponyReady = "true");
+    };
+
+    const setOpen = (open) => {
+      panel.hidden = !open;
+      trigger.setAttribute("aria-expanded", String(open));
+      picker.toggleAttribute("data-open", open);
+      if (open) panel.querySelector('[aria-pressed="true"]')?.focus();
+    };
+
+    const stored = readStored();
+    apply(options.find((option) => option.dataset.ponyThemeOption === stored) || fallback, false);
+
+    trigger.addEventListener("click", () => setOpen(panel.hidden));
+    picker.querySelector("[data-pony-theme-close]").addEventListener("click", () => setOpen(false));
+    options.forEach((option) => option.addEventListener("click", () => {
+      apply(option);
+      setOpen(false);
+      trigger.focus();
+    }));
+    document.addEventListener("click", (event) => {
+      if (!(event.target instanceof Element)) return;
+      const opener = event.target.closest("[data-pony-open-theme]");
+      if (opener) {
+        event.preventDefault();
+        setOpen(true);
+        return;
+      }
+      if (!panel.hidden && !picker.contains(event.target)) setOpen(false);
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !panel.hidden) {
+        setOpen(false);
+        trigger.focus();
+      }
+    });
+  })();
+</script>
+
+<style>
+  .theme-picker {
+    position: fixed;
+    right: max(18px, env(safe-area-inset-right));
+    bottom: max(18px, env(safe-area-inset-bottom));
+    z-index: 80;
+    color: var(--pony-fg);
+    font-family: var(--blume-font-body);
+  }
+
+  button { font: inherit; }
+
+  .theme-trigger {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 13px 0 9px;
+    border: 1px solid var(--pony-border);
+    border-radius: 14px;
+    color: var(--pony-fg);
+    background: color-mix(in srgb, var(--pony-surface-raised) 92%, transparent);
+    box-shadow: var(--pony-shadow-floating);
+    backdrop-filter: blur(18px) saturate(1.2);
+    cursor: pointer;
+  }
+
+  .theme-trigger:hover,
+  .theme-trigger:focus-visible {
+    border-color: color-mix(in srgb, var(--pony-accent) 55%, var(--pony-border));
+    background: var(--pony-surface-hover);
+    outline: none;
+  }
+
+  .theme-orbit {
+    position: relative;
+    width: 25px;
+    height: 25px;
+    display: block;
+    border-radius: 8px;
+    background: var(--pony-bg);
+    box-shadow: inset 0 0 0 1px var(--pony-border);
+  }
+
+  .theme-orbit i { position: absolute; width: 7px; height: 7px; border-radius: 50%; }
+  .theme-orbit i:nth-child(1) { left: 5px; top: 5px; background: var(--pony-accent); }
+  .theme-orbit i:nth-child(2) { right: 5px; top: 6px; background: var(--pony-success); }
+  .theme-orbit i:nth-child(3) { left: 9px; bottom: 4px; background: var(--pony-warning); }
+  .chevron { color: var(--pony-fg-tertiary); font-size: 11px; transition: transform .2s ease; }
+  [data-open] .chevron { transform: rotate(180deg); }
+
+  .theme-panel {
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 10px);
+    width: min(420px, calc(100vw - 28px));
+    padding: 12px;
+    border: 1px solid var(--pony-border);
+    border-radius: 18px;
+    color: var(--pony-fg);
+    background: color-mix(in srgb, var(--pony-bg) 94%, transparent);
+    box-shadow: var(--pony-shadow-lifted);
+    backdrop-filter: blur(24px) saturate(1.25);
+  }
+
+  .theme-panel[hidden] { display: none; }
+  .theme-panel header { display: flex; justify-content: space-between; align-items: start; padding: 4px 4px 12px; }
+  .theme-panel header strong, .theme-panel header span { display: block; }
+  .theme-panel header strong { font-size: 13px; }
+  .theme-panel header span { margin-top: 3px; color: var(--pony-fg-tertiary); font: 10px var(--blume-font-mono); }
+  .theme-panel header button { width: 28px; height: 28px; border: 0; border-radius: 8px; color: var(--pony-fg-secondary); background: transparent; cursor: pointer; font-size: 20px; line-height: 1; }
+  .theme-panel header button:hover { color: var(--pony-fg); background: var(--pony-surface-hover); }
+  .theme-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+
+  .theme-option {
+    min-width: 0;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 7px 8px;
+    padding: 7px;
+    border: 1px solid var(--pony-border);
+    border-radius: 11px;
+    color: var(--pony-fg);
+    background: var(--pony-surface);
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .theme-option:hover { border-color: var(--pony-fg-tertiary); background: var(--pony-surface-hover); }
+  .theme-option[aria-pressed="true"] { border-color: var(--pony-accent); box-shadow: inset 0 0 0 1px var(--pony-accent); }
+  .theme-option:focus-visible { outline: 2px solid var(--pony-accent); outline-offset: 2px; }
+  .mini-terminal { grid-column: 1 / -1; height: 54px; position: relative; display: block; overflow: hidden; border-radius: 7px; color: var(--preview-fg); background: var(--preview-bg); font: 8px var(--blume-font-mono); }
+  .mini-terminal i { position: absolute; top: 7px; width: 4px; height: 4px; border-radius: 50%; }
+  .mini-terminal i:nth-child(1) { left: 7px; background: #ff5f57; }
+  .mini-terminal i:nth-child(2) { left: 14px; background: #febc2e; }
+  .mini-terminal i:nth-child(3) { left: 21px; background: #28c840; }
+  .mini-terminal b { position: absolute; left: 9px; top: 26px; color: var(--preview-accent); }
+  .mini-terminal em { position: absolute; left: 19px; top: 26px; font-style: normal; opacity: .78; }
+  .mini-terminal small { position: absolute; right: 9px; bottom: 7px; color: var(--preview-green); }
+  .theme-name { overflow: hidden; color: var(--pony-fg); font-size: 10px; font-weight: 650; text-overflow: ellipsis; white-space: nowrap; }
+  .theme-mode { color: var(--pony-fg-tertiary); font: 8px var(--blume-font-mono); text-transform: uppercase; }
+
+  @media (max-width: 520px) {
+    .theme-picker { right: 12px; bottom: 12px; }
+    .theme-panel { max-height: min(610px, calc(100dvh - 82px)); overflow-y: auto; }
+    .theme-trigger { min-height: 42px; }
+  }
+</style>

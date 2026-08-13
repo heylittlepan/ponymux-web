@@ -1,32 +1,177 @@
-:root {
-  --blume-background: #f7f5f0;
-  --blume-foreground: #18181f;
-  --blume-muted: #ece9e2;
-  --blume-muted-foreground: #686871;
-  --blume-border: #dedbd4;
-  --blume-accent: #1478ff;
-  --blume-action: #1478ff;
+/*
+ * The website follows PonyMux's ThemeTokens rather than carrying a separate
+ * marketing palette. Each preset below is copied from the Ghostty themes used
+ * by the app; the UI tiers are derived with the same 5 / 8 / 12% foreground
+ * ladder as Sources/PonyMux/Theme.swift.
+ */
+:root,
+:root[data-pony-theme="tokyonight"] {
+  color-scheme: dark;
+  --pony-bg: #1a1b26;
+  --pony-fg: #c0caf5;
+  --pony-accent: #7aa2f7;
+  --pony-danger: #f7768e;
+  --pony-success: #9ece6a;
+  --pony-warning: #e0af68;
+  --pony-magenta: #bb9af7;
+  --pony-cyan: #7dcfff;
+  --pony-accent-ink: var(--pony-bg);
 }
 
-:root[data-theme="dark"] {
-  --blume-background: #111117;
-  --blume-foreground: #f4f2ec;
-  --blume-muted: #1b1b22;
-  --blume-muted-foreground: #a3a3ad;
-  --blume-border: #2c2c34;
-  --blume-accent: #65a7ff;
-  --blume-action: #65a7ff;
+:root[data-pony-theme="catppuccin-mocha"] {
+  color-scheme: dark;
+  --pony-bg: #1e1e2e;
+  --pony-fg: #cdd6f4;
+  --pony-accent: #89b4fa;
+  --pony-danger: #f38ba8;
+  --pony-success: #a6e3a1;
+  --pony-warning: #f9e2af;
+  --pony-magenta: #f5c2e7;
+  --pony-cyan: #94e2d5;
+  --pony-accent-ink: var(--pony-bg);
+}
+
+:root[data-pony-theme="rose-pine"] {
+  color-scheme: dark;
+  --pony-bg: #191724;
+  --pony-fg: #e0def4;
+  --pony-accent: #9ccfd8;
+  --pony-danger: #eb6f92;
+  --pony-success: #31748f;
+  --pony-warning: #f6c177;
+  --pony-magenta: #c4a7e7;
+  --pony-cyan: #ebbcba;
+  --pony-accent-ink: var(--pony-bg);
+}
+
+:root[data-pony-theme="dracula"] {
+  color-scheme: dark;
+  --pony-bg: #282a36;
+  --pony-fg: #f8f8f2;
+  --pony-accent: #bd93f9;
+  --pony-danger: #ff5555;
+  --pony-success: #50fa7b;
+  --pony-warning: #f1fa8c;
+  --pony-magenta: #ff79c6;
+  --pony-cyan: #8be9fd;
+  --pony-accent-ink: var(--pony-bg);
+}
+
+:root[data-pony-theme="everforest-dark-hard"] {
+  color-scheme: dark;
+  --pony-bg: #1e2326;
+  --pony-fg: #d3c6aa;
+  --pony-accent: #7fbbb3;
+  --pony-danger: #e67e80;
+  --pony-success: #a7c080;
+  --pony-warning: #dbbc7f;
+  --pony-magenta: #d699b6;
+  --pony-cyan: #83c092;
+  --pony-accent-ink: var(--pony-bg);
+}
+
+:root[data-pony-theme="gruvbox-dark"] {
+  color-scheme: dark;
+  --pony-bg: #282828;
+  --pony-fg: #ebdbb2;
+  --pony-accent: #458588;
+  --pony-danger: #cc241d;
+  --pony-success: #98971a;
+  --pony-warning: #d79921;
+  --pony-magenta: #b16286;
+  --pony-cyan: #689d6a;
+  --pony-accent-ink: #000;
+}
+
+:root[data-pony-theme="rose-pine-dawn"] {
+  color-scheme: light;
+  --pony-bg: #faf4ed;
+  --pony-fg: #575279;
+  --pony-accent: #56949f;
+  --pony-danger: #b4637a;
+  --pony-success: #286983;
+  --pony-warning: #ea9d34;
+  --pony-magenta: #907aa9;
+  --pony-cyan: #d7827e;
+  --pony-accent-ink: #000;
+}
+
+:root[data-pony-theme="catppuccin-latte"],
+:root[data-theme="light"]:not([data-pony-theme]) {
+  color-scheme: light;
+  --pony-bg: #eff1f5;
+  --pony-fg: #4c4f69;
+  --pony-accent: #1e66f5;
+  --pony-danger: #d20f39;
+  --pony-success: #40a02b;
+  --pony-warning: #df8e1d;
+  --pony-magenta: #ea76cb;
+  --pony-cyan: #179299;
+  --pony-accent-ink: #fff;
+}
+
+:root {
+  --pony-surface: color-mix(in srgb, var(--pony-fg) 5%, var(--pony-bg));
+  --pony-surface-raised: color-mix(in srgb, var(--pony-fg) 7%, var(--pony-bg));
+  --pony-surface-hover: color-mix(in srgb, var(--pony-fg) 8%, var(--pony-bg));
+  --pony-surface-selected: color-mix(in srgb, var(--pony-fg) 12%, var(--pony-bg));
+  --pony-fg-secondary: color-mix(in srgb, var(--pony-fg) 60%, transparent);
+  --pony-fg-tertiary: color-mix(in srgb, var(--pony-fg) 35%, transparent);
+  --pony-fg-icon: color-mix(in srgb, var(--pony-fg) 45%, transparent);
+  --pony-border: color-mix(in srgb, var(--pony-fg) 10%, transparent);
+  --pony-shadow-ink: color-mix(in srgb, var(--pony-bg) 15%, #000);
+  --pony-shadow-floating:
+    0 0 6px color-mix(in srgb, var(--pony-shadow-ink) 14%, transparent),
+    0 8px 22px color-mix(in srgb, var(--pony-shadow-ink) 18%, transparent);
+  --pony-shadow-lifted:
+    0 0 10px color-mix(in srgb, var(--pony-shadow-ink) 18%, transparent),
+    0 20px 50px color-mix(in srgb, var(--pony-shadow-ink) 28%, transparent);
+
+  --blume-background: var(--pony-bg);
+  --blume-foreground: var(--pony-fg);
+  --blume-muted: var(--pony-surface);
+  --blume-muted-foreground: var(--pony-fg-secondary);
+  --blume-border: var(--pony-border);
+  --blume-accent: var(--pony-accent);
+  --blume-accent-foreground: var(--pony-accent-ink);
+  --blume-action: var(--pony-accent);
+  --blume-action-foreground: var(--pony-accent-ink);
+  --blume-code-background: var(--pony-surface);
+  --blume-code-highlight: color-mix(in srgb, var(--pony-accent) 16%, transparent);
+  --blume-code-highlight-border: color-mix(in srgb, var(--pony-accent) 60%, transparent);
+  --blume-code-add: color-mix(in srgb, var(--pony-success) 18%, transparent);
+  --blume-code-add-border: color-mix(in srgb, var(--pony-success) 70%, transparent);
+  --blume-code-remove: color-mix(in srgb, var(--pony-danger) 18%, transparent);
+  --blume-code-remove-border: color-mix(in srgb, var(--pony-danger) 70%, transparent);
+  --blume-code-word: color-mix(in srgb, var(--pony-accent) 18%, transparent);
+  --blume-code-word-border: color-mix(in srgb, var(--pony-accent) 55%, transparent);
 }
 
 html {
   scroll-behavior: smooth;
+  background: var(--pony-bg);
 }
 
 body {
   letter-spacing: -0.01em;
 }
 
+body,
+[data-blume-header],
+.site-footer {
+  transition: background-color .24s ease, border-color .24s ease, color .24s ease;
+}
+
+[data-blume-theme-toggle] {
+  display: none !important;
+}
+
 ::selection {
-  color: white;
-  background: #1478ff;
+  color: var(--pony-bg);
+  background: var(--pony-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  body, [data-blume-header], .site-footer { transition: none; }
 }
