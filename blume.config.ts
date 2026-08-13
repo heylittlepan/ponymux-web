@@ -37,7 +37,7 @@ export default defineConfig({
     rss: { enabled: true, types: ["blog"] },
     og: {
       enabled: true,
-      logo: "/favicon.png",
+      logo: "/favicon.svg",
       site: "ponymux.com",
       palette: {
         accent: "#7aa2f7",
