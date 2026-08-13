@@ -55,6 +55,8 @@
   --pony-magenta: #a16a94;
   --pony-cyan: #8fbece;
   --pony-accent-ink: #000;
+  --pony-action: #0077ad;
+  --pony-action-ink: #fff;
 }
 
 :root[data-pony-theme="catppuccin-latte"],
@@ -69,6 +71,8 @@
   --pony-magenta: #ea76cb;
   --pony-cyan: #179299;
   --pony-accent-ink: #fff;
+  --pony-action: var(--pony-accent);
+  --pony-action-ink: #fff;
 }
 
 :root[data-pony-theme="tokyonight-day"] {
@@ -82,9 +86,13 @@
   --pony-magenta: #9854f1;
   --pony-cyan: #007197;
   --pony-accent-ink: #000;
+  --pony-action: #266fd0;
+  --pony-action-ink: #fff;
 }
 
 :root {
+  --pony-action: var(--pony-accent);
+  --pony-action-ink: var(--pony-accent-ink);
   --pony-mark-tile: transparent;
   --pony-mark-head: var(--pony-accent);
   --pony-mark-shadow: color-mix(in srgb, var(--pony-accent) 22%, transparent);
@@ -111,8 +119,8 @@
   --blume-border: var(--pony-border);
   --blume-accent: var(--pony-accent);
   --blume-accent-foreground: var(--pony-accent-ink);
-  --blume-action: var(--pony-accent);
-  --blume-action-foreground: var(--pony-accent-ink);
+  --blume-action: var(--pony-action);
+  --blume-action-foreground: var(--pony-action-ink);
   --blume-code-background: var(--pony-surface);
   --blume-code-highlight: color-mix(in srgb, var(--pony-accent) 16%, transparent);
   --blume-code-highlight-border: color-mix(in srgb, var(--pony-accent) 60%, transparent);
