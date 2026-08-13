@@ -3,6 +3,7 @@
   "name": "ponymux-web",
   "account_id": "5c06968841ee115b80652dc2fef73d9c",
   "compatibility_date": "2026-08-13",
+  "preview_urls": true,
   "assets": {
     "directory": "./dist",
     "not_found_handling": "404-page"
