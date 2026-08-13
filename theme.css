@@ -85,6 +85,7 @@
 }
 
 :root {
+  --pony-mark-tile: transparent;
   --pony-mark-head: var(--pony-accent);
   --pony-mark-shadow: color-mix(in srgb, var(--pony-accent) 22%, transparent);
   --pony-surface: color-mix(in srgb, var(--pony-fg) 5%, var(--pony-bg));
@@ -127,8 +128,9 @@
 :root[data-pony-theme="catppuccin-latte"],
 :root[data-pony-theme="tokyonight-day"],
 :root[data-theme="light"]:not([data-pony-theme]) {
-  --pony-mark-head: var(--pony-fg);
-  --pony-mark-shadow: color-mix(in srgb, var(--pony-fg) 14%, transparent);
+  --pony-mark-tile: var(--pony-accent);
+  --pony-mark-head: #fff;
+  --pony-mark-shadow: color-mix(in srgb, var(--pony-accent) 20%, transparent);
 }
 
 #pony-mark #pony-head {

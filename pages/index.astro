@@ -53,6 +53,7 @@ const { config } = data;
           <div class="app-body">
             <aside class="rail">
               <svg class="pony-mark" viewBox="0 0 1254 1254" aria-hidden="true" focusable="false">
+                <use class="pony-tile-layer" href="/favicon.svg#pony-tile"></use>
                 <use class="pony-frame-layer" href="/favicon.svg#pony-frame"></use>
                 <use class="pony-head-layer" href="/favicon.svg#pony-head"></use>
               </svg>
@@ -162,6 +163,7 @@ const { config } = data;
 
     <section class="closing shell">
       <svg class="closing-mark" viewBox="0 0 1254 1254" role="img" aria-label="PonyMux app icon">
+        <use class="pony-tile-layer" href="/favicon.svg#pony-tile"></use>
         <use class="pony-frame-layer" href="/favicon.svg#pony-frame"></use>
         <use class="pony-head-layer" href="/favicon.svg#pony-head"></use>
       </svg>
@@ -204,7 +206,7 @@ const { config } = data;
   .app-body { display: grid; grid-template-columns: 64px 310px 1fr; height: calc(100% - 50px); }
   .rail { padding: 18px 12px; display: flex; flex-direction: column; align-items: center; gap: 10px; background: var(--pony-surface); border-right: 1px solid var(--pony-border); }
   .rail .pony-mark { flex: 0 0 36px; width: 36px; height: 36px; margin-bottom: 8px; }
-  .pony-frame-layer { color: var(--pony-accent); }.pony-head-layer { color: var(--pony-mark-head); }
+  .pony-tile-layer { color: var(--pony-mark-tile); }.pony-frame-layer { color: var(--pony-accent); }.pony-head-layer { color: var(--pony-mark-head); }
   .rail button { border: 0; width: 38px; height: 38px; border-radius: 10px; color: var(--pony-fg-icon); background: transparent; }.rail .rail-active { color: var(--pony-fg); background: var(--pony-surface-selected); }.rail .rail-spacer { flex: 1; }
   .sessions { background: color-mix(in srgb, var(--pony-fg) 3%, var(--pony-bg)); border-right: 1px solid var(--pony-border); padding: 16px 12px; }
   .session-head { display: flex; justify-content: space-between; align-items: center; padding: 2px 8px 14px; }.session-head button { border: 0; color: var(--pony-fg-icon); background: transparent; font-size: 18px; }
