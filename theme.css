@@ -85,6 +85,8 @@
 }
 
 :root {
+  --pony-mark-head: var(--pony-accent);
+  --pony-mark-shadow: color-mix(in srgb, var(--pony-accent) 22%, transparent);
   --pony-surface: color-mix(in srgb, var(--pony-fg) 5%, var(--pony-bg));
   --pony-surface-raised: color-mix(in srgb, var(--pony-fg) 7%, var(--pony-bg));
   --pony-surface-hover: color-mix(in srgb, var(--pony-fg) 8%, var(--pony-bg));
@@ -119,6 +121,18 @@
   --blume-code-remove-border: color-mix(in srgb, var(--pony-danger) 70%, transparent);
   --blume-code-word: color-mix(in srgb, var(--pony-accent) 18%, transparent);
   --blume-code-word-border: color-mix(in srgb, var(--pony-accent) 55%, transparent);
+}
+
+:root[data-pony-theme="3024-day"],
+:root[data-pony-theme="catppuccin-latte"],
+:root[data-pony-theme="tokyonight-day"],
+:root[data-theme="light"]:not([data-pony-theme]) {
+  --pony-mark-head: var(--pony-fg);
+  --pony-mark-shadow: color-mix(in srgb, var(--pony-fg) 14%, transparent);
+}
+
+#pony-mark #pony-head {
+  color: var(--pony-mark-head);
 }
 
 html {

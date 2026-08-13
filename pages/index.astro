@@ -52,7 +52,10 @@ const { config } = data;
           </div>
           <div class="app-body">
             <aside class="rail">
-              <span class="pony-mark" aria-hidden="true"></span>
+              <svg class="pony-mark" viewBox="0 0 1254 1254" aria-hidden="true" focusable="false">
+                <use class="pony-frame-layer" href="/favicon.svg#pony-frame"></use>
+                <use class="pony-head-layer" href="/favicon.svg#pony-head"></use>
+              </svg>
               <button class="rail-active">⌁</button>
               <button>◇</button>
               <button>⌕</button>
@@ -158,7 +161,10 @@ const { config } = data;
     </section>
 
     <section class="closing shell">
-      <span class="closing-mark" role="img" aria-label="PonyMux app icon"></span>
+      <svg class="closing-mark" viewBox="0 0 1254 1254" role="img" aria-label="PonyMux app icon">
+        <use class="pony-frame-layer" href="/favicon.svg#pony-frame"></use>
+        <use class="pony-head-layer" href="/favicon.svg#pony-head"></use>
+      </svg>
       <div>
         <p class="section-kicker">Built in public, with a point of view</p>
         <h2>A calmer home for all the agents you run.</h2>
@@ -197,7 +203,8 @@ const { config } = data;
   .status { justify-self: end; color: var(--pony-fg-tertiary); }
   .app-body { display: grid; grid-template-columns: 64px 310px 1fr; height: calc(100% - 50px); }
   .rail { padding: 18px 12px; display: flex; flex-direction: column; align-items: center; gap: 10px; background: var(--pony-surface); border-right: 1px solid var(--pony-border); }
-  .rail .pony-mark { flex: 0 0 36px; width: 36px; height: 36px; margin-bottom: 8px; background: var(--pony-accent); -webkit-mask: url("/favicon.svg") center / contain no-repeat; mask: url("/favicon.svg") center / contain no-repeat; }
+  .rail .pony-mark { flex: 0 0 36px; width: 36px; height: 36px; margin-bottom: 8px; }
+  .pony-frame-layer { color: var(--pony-accent); }.pony-head-layer { color: var(--pony-mark-head); }
   .rail button { border: 0; width: 38px; height: 38px; border-radius: 10px; color: var(--pony-fg-icon); background: transparent; }.rail .rail-active { color: var(--pony-fg); background: var(--pony-surface-selected); }.rail .rail-spacer { flex: 1; }
   .sessions { background: color-mix(in srgb, var(--pony-fg) 3%, var(--pony-bg)); border-right: 1px solid var(--pony-border); padding: 16px 12px; }
   .session-head { display: flex; justify-content: space-between; align-items: center; padding: 2px 8px 14px; }.session-head button { border: 0; color: var(--pony-fg-icon); background: transparent; font-size: 18px; }
@@ -219,7 +226,7 @@ const { config } = data;
   .playful { background: linear-gradient(145deg, color-mix(in srgb, var(--pony-accent) 16%, var(--blume-muted)), var(--blume-muted) 68%); }.reactions { position: absolute; left: 36px; right: 36px; bottom: 36px; display: flex; justify-content: space-between; }.reactions span { width: 62px; height: 62px; display: grid; place-items: center; border: 1px solid color-mix(in srgb, var(--blume-border) 70%, var(--pony-accent)); border-radius: 18px; background: var(--blume-background); color: var(--blume-accent); font-size: 22px; transform: rotate(-5deg); }.reactions span:nth-child(even){transform:rotate(6deg) translateY(-12px)}
   .mood-button { margin-top: 22px; padding: 0; border: 0; color: var(--pony-accent); background: transparent; font-weight: 700; cursor: pointer; }.mood-button span { margin-left: 6px; }.mood-button:hover { text-decoration: underline; }
   .native-list { display: grid; gap: 10px; margin-top: 72px; }.native-list span { padding: 17px 18px; border-bottom: 1px solid var(--blume-border); font-weight: 650; }.native-list span::before { content: "✓"; color: var(--pony-success); margin-right: 11px; }
-  .closing { display: grid; grid-template-columns: auto 1fr auto; gap: 32px; align-items: center; padding: 70px 36px; margin-bottom: 72px; border: 1px solid var(--blume-border); border-radius: 24px; background: var(--blume-muted); }.closing-mark { width: 132px; height: 132px; background: var(--pony-accent); -webkit-mask: url("/favicon.svg") center / contain no-repeat; mask: url("/favicon.svg") center / contain no-repeat; filter: drop-shadow(0 18px 24px color-mix(in srgb, var(--pony-accent) 22%, transparent)); }.closing h2 { margin: 10px 0 8px; font-size: clamp(32px,4vw,48px); }.closing p { margin: 0; color: var(--blume-muted-foreground); }
+  .closing { display: grid; grid-template-columns: auto 1fr auto; gap: 32px; align-items: center; padding: 70px 36px; margin-bottom: 72px; border: 1px solid var(--blume-border); border-radius: 24px; background: var(--blume-muted); }.closing-mark { width: 132px; height: 132px; overflow: visible; filter: drop-shadow(0 18px 24px var(--pony-mark-shadow)); }.closing h2 { margin: 10px 0 8px; font-size: clamp(32px,4vw,48px); }.closing p { margin: 0; color: var(--blume-muted-foreground); }
   @keyframes blink { 50%{opacity:0} }
   @media (max-width: 900px) {
     .app-window { height: 560px; }.app-body{grid-template-columns:56px 240px 1fr}.terminal-copy{padding:26px 22px;font-size:11px}.memory{left:18px;right:18px}.principle.large{grid-template-columns:1fr;gap:32px}.closing{grid-template-columns:auto 1fr}.closing .primary{grid-column:1/-1}.comparison{grid-template-columns:1fr}.arrow{padding:14px;transform:rotate(90deg)}
