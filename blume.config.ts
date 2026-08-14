@@ -65,7 +65,7 @@ export default defineConfig({
   },
   navigation: {
     tabs: [
-      { label: "Blog", path: "/blog" },
+      { label: "Blog", path: "/blog", href: "/blog" },
       { label: "Docs", path: "/docs" },
     ],
   },
