@@ -1,0 +1,186 @@
+---
+title: The terminal mux I wanted didn’t exist
+description: After trying cmux, Herdr, and Otty, I realized I didn’t want better splits. I wanted a calmer way to manage coding-agent sessions.
+type: blog
+date: 2026-08-14
+authors:
+  - name: Little Pan
+sidebar:
+  hidden: true
+seo:
+  title: "Why I Built PonyMux: A Split-Free Terminal Mux for Coding Agents"
+  description: What cmux, Herdr, and Otty taught me about managing coding agents—and why I started building a native Mac terminal mux without split panes.
+---
+
+I’ve been trying a bunch of the new terminal muxes lately. [cmux](https://cmux.com/),
+[Herdr](https://herdr.dev/), [Otty](https://otty.sh/). They’re all interesting and,
+annoyingly, all pretty good at what they’re trying to do.
+
+None of them stuck for me.
+
+For a while I thought this just meant I was picky. Which is probably true. But
+after bouncing between them, I started to think I might be looking for the wrong
+thing.
+
+I didn’t need a better way to split terminals. I wanted a calmer way to manage
+agent sessions.
+
+So I started building PonyMux.
+
+This isn’t really a review of those products. They change fast, and I’m sure
+there are things I missed or used differently from the people who love them.
+This is more about what I learned from trying to make them fit the way I work.
+
+## It started with too many agents
+
+My terminal used to be a place where I typed commands. Now it’s often a place
+where I start something and leave.
+
+One agent is refactoring a subsystem. Another is running tests. A third stopped
+twenty minutes ago because it needs an approval. Somewhere there’s a session I
+still care about, although I can no longer remember which tab it’s in.
+
+The obvious answer is a mux. Put more terminals in one place. Keep them visible.
+Split the screen until everything fits.
+
+This works pretty well for ordinary terminal jobs. A server on the left, logs
+below, the shell you’re using on the right.
+
+Agents are a little different. They’re long-lived, asynchronous, and full of
+context. Most of the time I don’t need to watch one work. Watching text scroll
+past is not the same as knowing what needs my attention.
+
+Still, I assumed the answer was a better mux. So I went looking.
+
+## cmux: a better command center
+
+I liked [cmux](https://cmux.com/) almost immediately. It’s native, fast, and the
+vertical sidebar makes sense for agent work. The status indicators are useful.
+The embedded browser and programmable parts are genuinely impressive.
+
+It also makes splitting very easy. Maybe a little too easy for me.
+
+I’d open a few agents, arrange the panes, put a browser beside them, resize
+things, and end up with a pretty good command center. Then I’d have to manage
+the command center.
+
+Which pane should stay visible? Which one deserves more room? Is that agent
+still working, or am I just looking at old output? A few minutes later I was
+doing layout work instead of whatever I had opened the agents to do.
+
+That’s not a cmux problem. Plenty of people seem to want exactly this. It just
+made something obvious to me: I don’t actually enjoy command centers.
+
+{/* Draft note: replace the generic layout paragraph with one exact moment
+from using cmux: what was open, how many panes, and what made you give up. */}
+
+## Herdr: the mux is the product
+
+[Herdr](https://herdr.dev/) goes in a very different direction. It lives inside
+the terminal you already use. Sessions keep running when you detach, they can
+live on remote machines, and Herdr knows whether agents are working, blocked,
+or done.
+
+It’s a clean idea. No account, no big desktop environment, no pretending that
+the terminal isn’t still a terminal.
+
+But I spend most of my time on a Mac, and I realized I wanted the opposite
+boundary. I wanted a native app to be the home for all these sessions. I wanted
+finding and organizing them to feel more like navigating Things or Bear, and
+less like operating another interface inside my terminal.
+
+Herdr made the multiplexer much better at understanding agents. I was beginning
+to wonder whether I wanted to feel the multiplexer at all.
+
+{/* Draft note: add the real Herdr workflow that made this mismatch clear.
+Keep it as “not for me,” rather than a universal criticism. */}
+
+## Otty: how much should the terminal own?
+
+[Otty](https://otty.sh/) is native, polished, and much more ambitious than a
+traditional terminal. It has agent state, history, recovery, prompt workflows,
+panes, previews, and a lot of thought put into making agents feel at home.
+
+It sits somewhere between a terminal and a full agent development environment.
+That’s a reasonable place to build a product. It’s just not where I wanted to
+end up.
+
+Otty kept showing me useful things a terminal *could* own. I kept having the
+slightly awkward reaction that I wanted it to own less.
+
+I didn’t want the terminal that could contain the most workflow. I wanted the
+smallest mental model that could support a lot of work.
+
+{/* Draft note: name the one or two Otty features that felt like the boundary
+between a terminal and an ADE for you. */}
+
+## I had the problem backwards
+
+I kept comparing features. Persistence, notifications, panes, agent state,
+remote access, browsers. That was probably the wrong way to look at it.
+
+The thing I was running out of wasn’t screen space. It was attention.
+
+Most of the time I only needed to know three things:
+
+- Which agent needs me now?
+- What was this session about?
+- Can I come back later without reconstructing everything?
+
+I didn’t need every agent to remain visible. In fact, keeping them visible made
+them compete for attention even when nothing interesting was happening.
+
+With enough panes, I wasn’t coordinating more work. I was building a dashboard
+I had to babysit.
+
+I didn’t want a better pane manager. I wanted to stop managing panes.
+
+## So: no splits
+
+The first idea behind PonyMux was almost suspiciously simple: one terminal
+session in a window, with enough room to breathe.
+
+Everything else could live outside that surface. A list for scanning sessions.
+Folders for grouping them. Facets for narrowing a large pile down to what
+matters right now. A Quick Terminal for the small command that doesn’t deserve
+a permanent home.
+
+And no split panes.
+
+Admittedly, “a terminal mux without splits” is a slightly strange product pitch.
+Splits are treated as table stakes. Removing them looks less like a design
+decision and more like I forgot to finish the feature.
+
+But that constraint is the whole point. PonyMux should help me run more
+sessions without asking me to look at more terminals.
+
+There’s another part to it too. An agent terminal no longer feels disposable.
+It has a project, a purpose, a history, and a thread of thought I may want again
+next week. It should be something I can recognize and recall, not just a
+rectangle that happens to be open.
+
+Every terminal should have a memory.
+
+Not “let’s put another AI inside the terminal” memory. Just enough identity and
+context that I can find the right session and understand why it exists.
+
+## Maybe this is just me
+
+Some people genuinely think spatially. They want four panes visible, a browser
+beside them, logs in the corner, and the whole system under their eyes. cmux,
+Herdr, and Otty each serve versions of that workflow better than PonyMux is
+likely to.
+
+That’s fine. PonyMux isn’t trying to win a feature checklist.
+
+It’s for people whose terminal has filled up with long-lived agent sessions,
+but who don’t want their attention to fragment along with it. People who would
+rather switch deliberately than monitor continuously. People who want this
+part of the day to feel a little calmer.
+
+I don’t know yet how many of those people exist.
+
+I know I’m one of them, and apparently I wanted this badly enough to open Xcode.
+That may have been an overreaction, but here we are.
+
+[See what PonyMux looks like today](/). I’m building the rest in public.
