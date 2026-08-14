@@ -180,6 +180,58 @@ body,
   background: var(--pony-accent);
 }
 
+/* Editorial emphasis for the blog: turning points stay compact, while the
+   central claims get enough visual weight to work as pull quotes. */
+.prose :where(.pony-turn) {
+  margin-block: 2rem;
+  padding-inline-start: 1rem;
+  border-inline-start: 2px solid var(--pony-accent);
+  color: var(--pony-fg);
+  font-family: var(--blume-font-display);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: -0.015em;
+}
+
+.prose :where(blockquote.pony-point) {
+  margin-block: 2.5rem;
+  padding: 1.35rem 1.5rem;
+  border: 0;
+  border-inline-start: 4px solid var(--pony-accent);
+  border-radius: 0 1rem 1rem 0;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--pony-accent) 11%, var(--pony-bg)),
+    color-mix(in srgb, var(--pony-accent) 4%, var(--pony-bg))
+  );
+  color: var(--pony-fg);
+  font-family: var(--blume-font-display);
+  font-size: clamp(1.25rem, 2.2vw, 1.625rem);
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.38;
+  letter-spacing: -0.025em;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pony-accent) 12%, transparent);
+}
+
+.prose :where(blockquote.pony-point p) {
+  margin: 0;
+  color: inherit;
+  font: inherit;
+}
+
+.prose :where(blockquote.pony-point p)::before,
+.prose :where(blockquote.pony-point p)::after {
+  content: none;
+}
+
+@media (max-width: 640px) {
+  .prose :where(blockquote.pony-point) {
+    padding: 1.15rem 1.2rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   body, [data-blume-header], .site-footer { transition: none; }
