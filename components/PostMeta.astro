@@ -1,0 +1,75 @@
+---
+interface Author {
+  name: string;
+  url?: string;
+}
+
+interface Props {
+  authors?: Author | string | (Author | string)[];
+  date?: Date | string;
+}
+
+const { authors, date } = Astro.props;
+const authorList = (Array.isArray(authors) ? authors : authors ? [authors] : [])
+  .map((author) => typeof author === "string" ? { name: author } : author)
+  .filter((author): author is Author => Boolean(author?.name));
+
+const parsedDate = date ? new Date(date) : null;
+const isoDate = parsedDate && !Number.isNaN(parsedDate.valueOf())
+  ? parsedDate.toISOString()
+  : undefined;
+const displayDate = parsedDate && isoDate
+  ? new Intl.DateTimeFormat("en-US", {
+      day: "numeric",
+      month: "long",
+      timeZone: "UTC",
+      year: "numeric",
+    }).format(parsedDate)
+  : undefined;
+---
+
+{
+  (authorList.length > 0 || displayDate) && (
+    <div class="not-prose post-meta" aria-label="Post details">
+      {authorList.length > 0 && (
+        <span>
+          By{" "}
+          {authorList.map((author, index) => (
+            <>
+              {index > 0 && (index === authorList.length - 1 ? " and " : ", ")}
+              {author.url ? <a href={author.url}>{author.name}</a> : <strong>{author.name}</strong>}
+            </>
+          ))}
+        </span>
+      )}
+      {authorList.length > 0 && displayDate && <span aria-hidden="true">·</span>}
+      {displayDate && <time datetime={isoDate}>{displayDate}</time>}
+    </div>
+  )
+}
+
+<style>
+  .post-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.55rem;
+    margin: 1rem 0 2.35rem;
+    color: var(--pony-fg-secondary);
+    font: 500 12.5px/1.5 var(--blume-font-body);
+  }
+
+  strong,
+  a {
+    color: var(--pony-fg);
+    font-weight: 650;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--pony-accent);
+  }
+</style>

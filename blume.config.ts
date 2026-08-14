@@ -5,6 +5,35 @@ const agentWaitingRoomMarkdown: ComponentMarkdown = () => `
 *Illustration: several coding-agent sessions wait quietly in different states while one terminal remains in focus.*
 `;
 
+const postMetaMarkdown: ComponentMarkdown = ({ frontmatter }) => {
+  const rawAuthors = Array.isArray(frontmatter.authors)
+    ? frontmatter.authors
+    : frontmatter.authors
+      ? [frontmatter.authors]
+      : [];
+  const names = rawAuthors
+    .map((author) =>
+      typeof author === "string"
+        ? author
+        : author && typeof author === "object" && "name" in author
+          ? String(author.name)
+          : ""
+    )
+    .filter(Boolean)
+    .join(" and ");
+  const date = frontmatter.date
+    ? new Intl.DateTimeFormat("en-US", {
+        day: "numeric",
+        month: "long",
+        timeZone: "UTC",
+        year: "numeric",
+      }).format(new Date(frontmatter.date as string | Date))
+    : "";
+  const parts = [names ? `By ${names}` : "", date].filter(Boolean);
+
+  return parts.length > 0 ? `*${parts.join(" · ")}*\n` : "";
+};
+
 const muxLandscapeMarkdown: ComponentMarkdown = () => `
 **Three ways to frame the terminal**
 
@@ -59,6 +88,7 @@ export default defineConfig({
     markdownComponents: {
       AgentWaitingRoom: agentWaitingRoomMarkdown,
       MuxLandscape: muxLandscapeMarkdown,
+      PostMeta: postMetaMarkdown,
       SessionModel: sessionModelMarkdown,
     },
   },

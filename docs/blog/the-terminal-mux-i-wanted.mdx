@@ -12,6 +12,8 @@ seo:
   description: What cmux, Herdr, and Otty taught me about managing coding agents—and why I started building a native Mac terminal mux without split panes.
 ---
 
+<PostMeta authors={frontmatter.authors} date={frontmatter.date} />
+
 At some point, my terminal stopped being a place where I ran commands. It
 became a waiting room full of coding agents.
 
@@ -183,7 +185,20 @@ beside them, logs in the corner, and the whole system under their eyes. cmux,
 Herdr, and Otty each serve versions of that workflow better than PonyMux is
 likely to.
 
-That’s fine. PonyMux isn’t trying to win a feature checklist.
+There’s an obvious answer that already looks closer to what I’m describing: the
+Codex app and the Claude app. Neither one asks you to keep a wall of terminal
+panes visible. Each task has somewhere to live, and you move between them when
+you need to. In that sense, they’re pretty good evidence that this way of
+working isn’t just in my head.
+
+I like that direction. I just don’t always want the rest of the app around it.
+Both do a lot more than a terminal does. That can be useful. It also means
+bringing a much bigger app into a moment when I may only want a terminal.
+
+<p class="pony-turn">What I keep wanting is a smaller version of the same idea: the focus of an agent app, with the lightness of a terminal.</p>
+
+Maybe that is a narrow preference. PonyMux isn’t trying to replace those apps,
+or win a feature checklist.
 
 It’s for people whose terminal has filled up with long-lived agent sessions,
 but who don’t want their attention to fragment along with it. People who would
