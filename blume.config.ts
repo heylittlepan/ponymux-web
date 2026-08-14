@@ -1,4 +1,24 @@
 import { defineConfig } from "blume";
+import type { ComponentMarkdown } from "blume";
+
+const muxLandscapeMarkdown: ComponentMarkdown = () => `
+**Three ways to frame the terminal**
+
+- cmux — command center
+- Herdr — agent-aware mux
+- Otty — agent workspace
+
+Three muxes, three different ideas about what belongs inside the terminal.
+`;
+
+const sessionModelMarkdown: ComponentMarkdown = () => `
+**Same sessions, different mental model**
+
+- Keep everything visible — manage space.
+- Keep one thing in focus — manage attention.
+
+More sessions don’t have to mean more terminals on screen.
+`;
 
 export default defineConfig({
   title: "PonyMux",
@@ -30,6 +50,12 @@ export default defineConfig({
         },
       },
     ],
+  },
+  ai: {
+    markdownComponents: {
+      MuxLandscape: muxLandscapeMarkdown,
+      SessionModel: sessionModelMarkdown,
+    },
   },
   theme: {
     accent: { light: "#1e66f5", dark: "#7aa2f7" },

@@ -1,0 +1,174 @@
+<figure class="not-prose pony-editorial-figure" aria-labelledby="mux-landscape-caption">
+  <div class="figure-shell">
+    <div class="figure-kicker">
+      <span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+      Three ways to frame the terminal
+    </div>
+
+    <div class="landscape-grid">
+      <div class="landscape-item cmux">
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <rect x="5" y="7" width="38" height="34" rx="7"></rect>
+          <path d="M22 8v32M6 24h36"></path>
+          <circle cx="14" cy="16" r="2"></circle>
+        </svg>
+        <div>
+          <strong>cmux</strong>
+          <span>Command center</span>
+        </div>
+      </div>
+
+      <div class="landscape-item herdr">
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <rect x="5" y="7" width="38" height="34" rx="7"></rect>
+          <path d="m12 18 5 4-5 4M20 27h7"></path>
+          <circle cx="35" cy="17" r="2"></circle>
+          <circle cx="35" cy="24" r="2"></circle>
+          <circle cx="35" cy="31" r="2"></circle>
+        </svg>
+        <div>
+          <strong>Herdr</strong>
+          <span>Agent-aware mux</span>
+        </div>
+      </div>
+
+      <div class="landscape-item otty">
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <rect x="7" y="8" width="30" height="25" rx="6"></rect>
+          <path d="M12 38h25a5 5 0 0 0 5-5V15"></path>
+          <path d="M14 17h16M14 23h10"></path>
+        </svg>
+        <div>
+          <strong>Otty</strong>
+          <span>Agent workspace</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <figcaption id="mux-landscape-caption">
+    Three muxes, three different ideas about what belongs inside the terminal.
+  </figcaption>
+</figure>
+
+<style>
+  .pony-editorial-figure {
+    margin: 2.75rem 0;
+    color: var(--pony-fg);
+  }
+
+  .figure-shell {
+    overflow: hidden;
+    border: 1px solid var(--pony-border);
+    border-radius: 18px;
+    background: color-mix(in srgb, var(--pony-fg) 3%, var(--pony-bg));
+    box-shadow: 0 16px 42px color-mix(in srgb, var(--pony-shadow-ink) 8%, transparent);
+  }
+
+  .figure-kicker {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 42px;
+    padding: 0 15px;
+    border-bottom: 1px solid var(--pony-border);
+    color: var(--pony-fg-tertiary);
+    font: 600 10px/1 var(--blume-font-mono);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+
+  .window-dots {
+    display: flex;
+    gap: 4px;
+  }
+
+  .window-dots i {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--pony-fg-icon);
+  }
+
+  .window-dots i:nth-child(2) { background: var(--pony-accent); }
+  .window-dots i:nth-child(3) { background: var(--pony-success); }
+
+  .landscape-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .landscape-item {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    min-width: 0;
+    padding: 23px 19px;
+  }
+
+  .landscape-item + .landscape-item {
+    border-inline-start: 1px solid var(--pony-border);
+  }
+
+  .landscape-item svg {
+    flex: 0 0 auto;
+    width: 44px;
+    height: 44px;
+    padding: 7px;
+    border-radius: 12px;
+    color: var(--pony-accent);
+    background: color-mix(in srgb, currentColor 10%, transparent);
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+  }
+
+  .landscape-item.herdr svg { color: var(--pony-cyan); }
+  .landscape-item.otty svg { color: var(--pony-magenta); }
+
+  .landscape-item strong,
+  .landscape-item span {
+    display: block;
+  }
+
+  .landscape-item strong {
+    margin-bottom: 4px;
+    font: 650 15px/1.1 var(--blume-font-display);
+    letter-spacing: -.015em;
+  }
+
+  .landscape-item span {
+    color: var(--pony-fg-secondary);
+    font: 12px/1.35 var(--blume-font-body);
+  }
+
+  figcaption {
+    margin-top: 11px;
+    color: var(--pony-fg-secondary);
+    font: 11.5px/1.45 var(--blume-font-body);
+    text-align: center;
+  }
+
+  @media (max-width: 640px) {
+    .pony-editorial-figure { margin-block: 2.25rem; }
+
+    .landscape-grid { grid-template-columns: 1fr; }
+
+    .landscape-item {
+      min-height: 76px;
+      padding: 15px 18px;
+    }
+
+    .landscape-item + .landscape-item {
+      border-inline-start: 0;
+      border-top: 1px solid var(--pony-border);
+    }
+
+    .landscape-item svg {
+      width: 40px;
+      height: 40px;
+    }
+  }
+</style>

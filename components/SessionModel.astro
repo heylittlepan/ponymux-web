@@ -1,0 +1,247 @@
+<figure class="not-prose pony-editorial-figure" aria-labelledby="session-model-caption">
+  <div class="figure-shell">
+    <div class="figure-kicker">
+      <span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+      Same sessions, different mental model
+    </div>
+
+    <div class="model-grid">
+      <div class="model">
+        <div class="mini-app panes" aria-hidden="true">
+          <div><i></i></div>
+          <div><i></i></div>
+          <div><i></i></div>
+          <div><i></i></div>
+          <div><i></i></div>
+          <div><i></i></div>
+        </div>
+        <strong>Keep everything visible</strong>
+        <span>Manage space</span>
+      </div>
+
+      <div class="shift" aria-hidden="true">
+        <span class="wide">→</span>
+        <span class="narrow">↓</span>
+      </div>
+
+      <div class="model focus-model">
+        <div class="mini-app focus" aria-hidden="true">
+          <div class="session-list">
+            <i></i><i></i><i></i><i></i><i></i>
+          </div>
+          <div class="terminal">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+        <strong>Keep one thing in focus</strong>
+        <span>Manage attention</span>
+      </div>
+    </div>
+  </div>
+
+  <figcaption id="session-model-caption">
+    More sessions don’t have to mean more terminals on screen.
+  </figcaption>
+</figure>
+
+<style>
+  .pony-editorial-figure {
+    margin: 2.75rem 0;
+    color: var(--pony-fg);
+  }
+
+  .figure-shell {
+    overflow: hidden;
+    border: 1px solid var(--pony-border);
+    border-radius: 18px;
+    background: color-mix(in srgb, var(--pony-fg) 3%, var(--pony-bg));
+    box-shadow: 0 16px 42px color-mix(in srgb, var(--pony-shadow-ink) 8%, transparent);
+  }
+
+  .figure-kicker {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 42px;
+    padding: 0 15px;
+    border-bottom: 1px solid var(--pony-border);
+    color: var(--pony-fg-tertiary);
+    font: 600 10px/1 var(--blume-font-mono);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+
+  .window-dots {
+    display: flex;
+    gap: 4px;
+  }
+
+  .window-dots i {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--pony-fg-icon);
+  }
+
+  .window-dots i:nth-child(2) { background: var(--pony-accent); }
+  .window-dots i:nth-child(3) { background: var(--pony-success); }
+
+  .model-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 44px minmax(0, 1fr);
+    align-items: center;
+    padding: 24px;
+  }
+
+  .model {
+    min-width: 0;
+    text-align: center;
+  }
+
+  .mini-app {
+    width: 100%;
+    height: 138px;
+    margin-bottom: 15px;
+    padding: 9px;
+    border: 1px solid var(--pony-border);
+    border-radius: 13px;
+    background: var(--pony-bg);
+  }
+
+  .panes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 5px;
+  }
+
+  .panes > div {
+    position: relative;
+    border-radius: 5px;
+    background: var(--pony-surface-selected);
+  }
+
+  .panes > div:nth-child(2),
+  .panes > div:nth-child(5) {
+    background: color-mix(in srgb, var(--pony-accent) 14%, var(--pony-bg));
+  }
+
+  .panes i {
+    position: absolute;
+    top: 7px;
+    left: 7px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--pony-fg-icon);
+  }
+
+  .panes > div:nth-child(2) i { background: var(--pony-accent); }
+  .panes > div:nth-child(4) i { background: var(--pony-warning); }
+  .panes > div:nth-child(5) i { background: var(--pony-success); }
+
+  .focus {
+    display: grid;
+    grid-template-columns: 34px 1fr;
+    gap: 7px;
+  }
+
+  .session-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding-top: 10px;
+    border-radius: 7px;
+    background: var(--pony-surface);
+  }
+
+  .session-list i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--pony-fg-icon);
+  }
+
+  .session-list i:first-child { background: var(--pony-accent); }
+  .session-list i:nth-child(3) { background: var(--pony-success); }
+  .session-list i:nth-child(5) { background: var(--pony-warning); }
+
+  .terminal {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 17px 15px;
+    border-radius: 7px;
+    background: color-mix(in srgb, var(--pony-accent) 9%, var(--pony-bg));
+  }
+
+  .terminal span {
+    display: block;
+    width: 72%;
+    height: 5px;
+    border-radius: 999px;
+    background: var(--pony-fg-icon);
+  }
+
+  .terminal span:first-child {
+    width: 46%;
+    background: var(--pony-accent);
+  }
+
+  .terminal span:last-child { width: 58%; }
+
+  .model strong,
+  .model > span {
+    display: block;
+  }
+
+  .model strong {
+    font: 650 14px/1.25 var(--blume-font-display);
+    letter-spacing: -.015em;
+  }
+
+  .model > span {
+    margin-top: 4px;
+    color: var(--pony-fg-secondary);
+    font: 10px/1.3 var(--blume-font-mono);
+    letter-spacing: .05em;
+    text-transform: uppercase;
+  }
+
+  .focus-model > span { color: var(--pony-accent); }
+
+  .shift {
+    color: var(--pony-accent);
+    font: 500 22px/1 var(--blume-font-display);
+    text-align: center;
+  }
+
+  .narrow { display: none; }
+
+  figcaption {
+    margin-top: 11px;
+    color: var(--pony-fg-secondary);
+    font: 11.5px/1.45 var(--blume-font-body);
+    text-align: center;
+  }
+
+  @media (max-width: 640px) {
+    .pony-editorial-figure { margin-block: 2.25rem; }
+
+    .model-grid {
+      grid-template-columns: 1fr;
+      gap: 12px;
+      padding: 18px;
+    }
+
+    .mini-app {
+      height: 124px;
+      margin-bottom: 12px;
+    }
+
+    .shift { padding-block: 1px; }
+    .wide { display: none; }
+    .narrow { display: inline; }
+  }
+</style>
