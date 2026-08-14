@@ -1,6 +1,10 @@
 import { defineConfig } from "blume";
 import type { ComponentMarkdown } from "blume";
 
+const agentWaitingRoomMarkdown: ComponentMarkdown = () => `
+*Illustration: several coding-agent sessions wait quietly in different states while one terminal remains in focus.*
+`;
+
 const muxLandscapeMarkdown: ComponentMarkdown = () => `
 **Three ways to frame the terminal**
 
@@ -53,6 +57,7 @@ export default defineConfig({
   },
   ai: {
     markdownComponents: {
+      AgentWaitingRoom: agentWaitingRoomMarkdown,
       MuxLandscape: muxLandscapeMarkdown,
       SessionModel: sessionModelMarkdown,
     },
