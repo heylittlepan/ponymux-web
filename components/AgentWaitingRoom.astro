@@ -1,379 +1,53 @@
-<figure class="not-prose agent-waiting-room">
-  <svg
-    viewBox="0 0 720 390"
-    role="img"
-    aria-labelledby="agent-waiting-room-title agent-waiting-room-description"
-  >
-    <title id="agent-waiting-room-title">A waiting room full of coding agents</title>
-    <desc id="agent-waiting-room-description">
-      Four terminal-shaped coding agents wait on a bench while a pony receptionist watches over them.
-    </desc>
-
-    <defs>
-      <filter id="waiting-room-shadow" x="-30%" y="-30%" width="160%" height="180%">
-        <feDropShadow dx="0" dy="7" stdDeviation="7" flood-color="var(--pony-shadow-ink)" flood-opacity=".12"></feDropShadow>
-      </filter>
-
-      <g id="terminal-agent">
-        <rect class="agent-frame" width="88" height="76" rx="11"></rect>
-        <path class="agent-divider" d="M1 19h86"></path>
-        <circle class="status danger" cx="10" cy="10" r="3.5"></circle>
-        <circle class="status warning" cx="21" cy="10" r="3.5"></circle>
-        <circle class="status success" cx="32" cy="10" r="3.5"></circle>
-        <rect class="agent-screen" x="6" y="25" width="76" height="45" rx="3"></rect>
-        <path class="terminal-prompt" d="m18 37 10 9-10 9M35 55h17"></path>
-      </g>
-    </defs>
-
-    <rect class="room" x="1" y="1" width="718" height="388" rx="26"></rect>
-    <path class="floor-line" d="M18 345h684"></path>
-
-    <g class="wall-art" aria-hidden="true">
-      <rect x="40" y="54" width="82" height="63" rx="2"></rect>
-      <rect x="49" y="63" width="64" height="45" rx="1"></rect>
-      <circle cx="70" cy="80" r="5"></circle>
-      <path d="m49 108 17-16 12 10 18-18 17 24"></path>
-    </g>
-
-    <g class="clock" aria-hidden="true">
-      <circle cx="659" cy="67" r="29"></circle>
-      <path d="M659 51v17l13 7"></path>
-      <circle cx="659" cy="67" r="2.5"></circle>
-    </g>
-
-    <g class="floor-plant" aria-hidden="true">
-      <path class="plant-stems" d="M44 303c-2-35 0-64 9-88M50 275c-16-13-23-29-20-48M49 253c15-12 23-27 25-45M46 288c16-6 28-18 33-35"></path>
-      <path class="plant-leaf" d="M52 256c-15-8-22-20-21-35 15 6 23 18 21 35ZM52 240c1-17 8-30 21-39 3 16-4 30-21 39ZM47 278c-17-6-28-17-33-32 18 3 29 14 33 32ZM51 289c17-4 30-14 38-29-18 1-31 11-38 29Z"></path>
-      <path class="plant-pot" d="M23 300h55l-6 45H31Z"></path>
-    </g>
-
-    <g class="bench" aria-hidden="true">
-      <rect class="bench-back" x="67" y="232" width="401" height="62" rx="14"></rect>
-      <path class="bench-seams" d="M165 233v60M266 233v60M367 233v60"></path>
-      <rect class="bench-seat" x="60" y="285" width="415" height="18" rx="9"></rect>
-      <path class="bench-legs" d="M80 303v39M450 303v39M69 342h22M439 342h22"></path>
-    </g>
-
-    <g class="agent agent-one" transform="translate(75 184)">
-      <use href="#terminal-agent"></use>
-      <path class="limb" d="M7 54C-2 66 4 83 21 84M81 55c9 13 3 28-14 29M31 76v38c0 9 6 13 13 13M61 76v38c0 9 6 13 13 13"></path>
-      <rect class="handheld" x="25" y="76" width="42" height="22" rx="5"></rect>
-      <circle class="handheld-dot" cx="34" cy="87" r="3"></circle>
-      <path class="handheld-line" d="M48 87h10"></path>
-      <circle class="hand" cx="21" cy="84" r="6"></circle>
-      <circle class="hand" cx="68" cy="84" r="6"></circle>
-      <g class="state-bubble working" transform="translate(18 -42)">
-        <path class="bubble" d="M6 0h38a13 13 0 0 1 0 26H29l-8 9-2-9H6A13 13 0 0 1 6 0Z"></path>
-        <circle cx="17" cy="13" r="2.5"></circle>
-        <circle cx="25" cy="13" r="2.5"></circle>
-        <circle cx="33" cy="13" r="2.5"></circle>
-      </g>
-    </g>
-
-    <g class="agent agent-two" transform="translate(173 180)">
-      <use href="#terminal-agent"></use>
-      <path class="limb" d="M8 56C-1 68 3 84 21 86M79 58c9 11 4 24-10 28M34 76v40c0 9 6 13 13 13M61 76v40c0 9 6 13 13 13"></path>
-      <path class="thinking-arm" d="M21 86c11-10 15-21 17-33"></path>
-      <circle class="hand" cx="39" cy="50" r="7"></circle>
-      <g class="state-bubble question" transform="translate(22 -45)">
-        <path class="bubble" d="M6 0h33a13 13 0 0 1 0 26H26l-8 9-2-9H6A13 13 0 0 1 6 0Z"></path>
-        <path class="question-mark" d="M18 9c1-6 11-7 13-1 2 7-7 6-7 12M24 24h.1"></path>
-      </g>
-    </g>
-
-    <g class="agent agent-three" transform="translate(272 184)">
-      <use href="#terminal-agent"></use>
-      <path class="limb" d="M7 55C-2 67 4 83 20 85M81 56c8 11 4 23-9 28M34 76v38c0 9 6 13 13 13M61 76v38c0 9 6 13 13 13"></path>
-      <path class="laptop" d="M18 78h59l-7 35H25Z"></path>
-      <circle class="laptop-dot" cx="48" cy="94" r="4"></circle>
-      <g class="state-bubble working" transform="translate(19 -42)">
-        <path class="bubble" d="M6 0h38a13 13 0 0 1 0 26H29l-8 9-2-9H6A13 13 0 0 1 6 0Z"></path>
-        <circle cx="17" cy="13" r="2.5"></circle>
-        <circle cx="25" cy="13" r="2.5"></circle>
-        <circle cx="33" cy="13" r="2.5"></circle>
-      </g>
-    </g>
-
-    <g class="agent agent-four" transform="translate(371 182)">
-      <use href="#terminal-agent"></use>
-      <path class="limb" d="M7 55C-2 68 4 84 22 86M34 76v39c0 9 6 13 13 13M61 76v39c0 9 6 13 13 13"></path>
-      <path class="thumb-arm" d="M81 58c14 5 20-2 20-14"></path>
-      <path class="thumb" d="M99 44c1-8 5-12 9-11 4 1 2 7 1 9 8-2 11 2 9 7-2 7-10 10-18 8"></path>
-      <circle class="hand" cx="22" cy="86" r="6"></circle>
-      <g class="state-bubble done" transform="translate(19 -43)">
-        <path class="bubble" d="M6 0h38a13 13 0 0 1 0 26H29l-8 9-2-9H6A13 13 0 0 1 6 0Z"></path>
-        <path class="check" d="m15 13 7 7L36 6"></path>
-      </g>
-    </g>
-
-    <g class="pony" aria-hidden="true">
-      <path class="pony-back-mane" d="M617 139c11-13 27-10 31 4 17-6 29 6 24 20 15 2 22 15 16 27 13 7 14 23 4 31 10 11 5 27-9 31H645l-22-30Z"></path>
-      <path class="pony-top-mane" d="M553 153c-13-2-18-15-11-25 6-9 16-8 22-2-2-14 11-24 24-19 8-14 29-12 34 3 12-6 26 2 25 15-1 12-13 23-25 24l-44 15Z"></path>
-      <path class="pony-head" d="M564 148c-1 15-1 30-5 42-2 8-11 11-14 18-5 12 5 28 18 32 13 4 31 0 44 0l20 19h29l-13-29c9-9 13-22 13-39 0-17-5-34-16-45-18-18-55-17-76 2Z"></path>
-      <path class="pony-ear" d="M617 143c2-24 11-42 21-40 11 3 12 24 2 47"></path>
-      <path class="pony-ear-inner" d="M628 137c2-13 6-22 10-23 5 6 2 17-4 27"></path>
-      <ellipse class="pony-eye" cx="608" cy="180" rx="9" ry="14"></ellipse>
-      <ellipse class="pony-eye-shine" cx="605" cy="174" rx="3" ry="4"></ellipse>
-      <circle class="pony-nostril" cx="558" cy="211" r="3"></circle>
-      <ellipse class="pony-blush" cx="625" cy="210" rx="8" ry="4"></ellipse>
-      <path class="pony-mouth" d="M552 224c8 8 20 9 31 4"></path>
-      <path class="pony-neck" d="M615 239v26M648 242v23"></path>
-    </g>
-
-    <g class="desk" aria-hidden="true">
-      <rect class="desk-front" x="505" y="263" width="199" height="82" rx="8"></rect>
-      <rect class="desk-top" x="496" y="253" width="217" height="16" rx="8"></rect>
-    </g>
-
-    <g class="bell" aria-hidden="true">
-      <path d="M514 251h48M521 247c1-16 8-24 17-24s16 8 17 24Z"></path>
-      <circle cx="538" cy="218" r="3"></circle>
-    </g>
-
-    <g class="desk-plant" aria-hidden="true">
-      <path class="plant-stems" d="M677 253c0-22 2-39 9-51M683 229c-10-7-15-15-16-25M685 218c10-6 17-14 21-25"></path>
-      <path class="plant-leaf" d="M682 229c-10-2-17-9-20-19 11 1 18 7 20 19ZM686 217c0-12 6-22 17-29 2 12-4 22-17 29ZM685 240c12-2 21-8 27-17-12-1-21 5-27 17Z"></path>
-      <path class="desk-pot" d="M664 239h38l-4 23h-30Z"></path>
-    </g>
-  </svg>
+<figure
+  class="not-prose agent-waiting-room"
+  role="img"
+  aria-label="Four terminal-shaped coding agents wait on a bench while a pony receptionist watches over them."
+>
+  <img
+    class="room-light"
+    src="/blog/agent-waiting-room-light.webp"
+    alt=""
+    width="1280"
+    height="720"
+    decoding="async"
+    fetchpriority="high"
+  />
+  <img
+    class="room-dark"
+    src="/blog/agent-waiting-room-dark.webp"
+    alt=""
+    width="1280"
+    height="720"
+    decoding="async"
+    fetchpriority="high"
+  />
 </figure>
 
 <style>
   .agent-waiting-room {
-    --illustration-ink: color-mix(in srgb, var(--pony-fg) 78%, var(--pony-bg));
-    --illustration-soft-ink: color-mix(in srgb, var(--pony-fg) 32%, transparent);
-    --illustration-paper: color-mix(in srgb, var(--pony-fg) 2.5%, var(--pony-bg));
-    --illustration-body: color-mix(in srgb, var(--pony-fg) 12%, var(--pony-bg));
-    --illustration-screen: color-mix(in srgb, var(--pony-bg) 18%, #101115);
+    overflow: hidden;
     margin: 2rem 0 2.75rem;
+    border: 1px solid var(--pony-border);
+    border-radius: 18px;
+    background: var(--pony-surface);
+    box-shadow: 0 16px 42px color-mix(in srgb, var(--pony-shadow-ink) 8%, transparent);
   }
 
-  svg {
+  img {
     display: block;
     width: 100%;
     height: auto;
-    overflow: visible;
   }
 
-  .room {
-    fill: var(--illustration-paper);
-    stroke: var(--pony-border);
-    stroke-width: 2;
-  }
+  .room-dark { display: none; }
 
-  .floor-line,
-  .clock circle,
-  .clock path,
-  .plant-stems,
-  .bench-legs,
-  .pony-neck {
-    fill: none;
-    stroke: var(--illustration-ink);
-    stroke-width: 3;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  .wall-art > rect:first-child,
-  .clock > circle:first-child {
-    fill: var(--pony-bg);
-    stroke: var(--illustration-ink);
-    stroke-width: 3;
-  }
-
-  .wall-art > rect:nth-child(2) {
-    fill: color-mix(in srgb, var(--pony-accent) 5%, var(--pony-bg));
-    stroke: color-mix(in srgb, var(--pony-accent) 35%, var(--pony-bg));
-    stroke-width: 2;
-  }
-
-  .wall-art circle,
-  .wall-art path {
-    fill: color-mix(in srgb, var(--pony-accent) 58%, var(--pony-bg));
-  }
-
-  .clock > circle:last-child { fill: var(--pony-accent); stroke: none; }
-
-  .plant-leaf {
-    fill: color-mix(in srgb, var(--pony-accent) 45%, var(--pony-bg));
-    stroke: var(--illustration-ink);
-    stroke-width: 2;
-    stroke-linejoin: round;
-  }
-
-  .plant-pot,
-  .desk-pot {
-    fill: var(--pony-bg);
-    stroke: var(--illustration-ink);
-    stroke-width: 3;
-    stroke-linejoin: round;
-  }
-
-  .desk-pot {
-    fill: color-mix(in srgb, var(--pony-accent) 58%, var(--pony-bg));
-  }
-
-  .bench-back,
-  .bench-seat {
-    fill: color-mix(in srgb, var(--pony-accent) 13%, var(--pony-bg));
-    stroke: var(--illustration-ink);
-    stroke-width: 3;
-  }
-
-  .bench-seams {
-    fill: none;
-    stroke: var(--pony-border);
-    stroke-width: 2;
-  }
-
-  .agent-frame {
-    fill: var(--pony-bg);
-    stroke: var(--illustration-ink);
-    stroke-width: 3;
-  }
-
-  .agent-divider {
-    fill: none;
-    stroke: var(--pony-border);
-    stroke-width: 2;
-  }
-
-  .agent-screen { fill: var(--illustration-screen); }
-  .status.danger { fill: var(--pony-danger); }
-  .status.warning { fill: var(--pony-warning); }
-  .status.success { fill: var(--pony-success); }
-
-  .terminal-prompt {
-    fill: none;
-    stroke: color-mix(in srgb, var(--pony-fg) 84%, #fff);
-    stroke-width: 4;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  .limb,
-  .thinking-arm,
-  .thumb-arm,
-  .thumb {
-    fill: none;
-    stroke: var(--illustration-ink);
-    stroke-width: 6;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  .thinking-arm,
-  .thumb-arm,
-  .thumb { stroke-width: 4; }
-
-  .hand { fill: var(--illustration-ink); }
-
-  .handheld {
-    fill: color-mix(in srgb, var(--pony-accent) 45%, var(--pony-bg));
-    stroke: var(--illustration-ink);
-    stroke-width: 2;
-  }
-
-  .handheld-dot { fill: var(--pony-accent); }
-  .handheld-line { stroke: var(--illustration-ink); stroke-width: 2; stroke-linecap: round; }
-
-  .laptop {
-    fill: color-mix(in srgb, var(--pony-accent) 70%, var(--pony-bg));
-    stroke: var(--illustration-ink);
-    stroke-width: 3;
-    stroke-linejoin: round;
-  }
-
-  .laptop-dot { fill: var(--pony-bg); }
-
-  .bubble {
-    fill: var(--pony-bg);
-    stroke: var(--illustration-ink);
-    stroke-width: 2.5;
-  }
-
-  .working circle { fill: var(--pony-accent); }
-
-  .question-mark {
-    fill: none;
-    stroke: var(--pony-warning);
-    stroke-width: 4;
-    stroke-linecap: round;
-  }
-
-  .check {
-    fill: none;
-    stroke: var(--pony-success);
-    stroke-width: 4;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  .pony-back-mane,
-  .pony-top-mane {
-    fill: color-mix(in srgb, var(--pony-accent) 42%, var(--pony-bg));
-    stroke: var(--illustration-ink);
-    stroke-width: 3;
-    stroke-linejoin: round;
-  }
-
-  .pony-head,
-  .pony-ear {
-    fill: var(--illustration-body);
-    stroke: var(--illustration-ink);
-    stroke-width: 3;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  .pony-ear-inner {
-    fill: none;
-    stroke: color-mix(in srgb, var(--pony-magenta) 55%, var(--pony-bg));
-    stroke-width: 3;
-    stroke-linecap: round;
-  }
-
-  .pony-eye { fill: var(--illustration-ink); }
-  .pony-eye-shine { fill: var(--illustration-paper); }
-  .pony-nostril { fill: color-mix(in srgb, var(--pony-magenta) 55%, var(--pony-bg)); }
-  .pony-blush { fill: color-mix(in srgb, var(--pony-magenta) 22%, var(--pony-bg)); }
-
-  .pony-mouth {
-    fill: none;
-    stroke: var(--illustration-ink);
-    stroke-width: 2.5;
-    stroke-linecap: round;
-  }
-
-  .desk-front,
-  .desk-top {
-    fill: var(--pony-bg);
-    stroke: var(--illustration-ink);
-    stroke-width: 3;
-  }
-
-  .bell path,
-  .bell circle {
-    fill: color-mix(in srgb, var(--pony-accent) 42%, var(--pony-bg));
-    stroke: var(--illustration-ink);
-    stroke-width: 2.5;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  .agent-three .terminal-prompt {
-    animation: pony-agent-cursor 1.3s steps(2, end) infinite;
-  }
-
-  @keyframes pony-agent-cursor {
-    50% { opacity: .42; }
-  }
+  :global(:root[data-theme="dark"]) .room-light { display: none; }
+  :global(:root[data-theme="dark"]) .room-dark { display: block; }
 
   @media (max-width: 640px) {
-    .agent-waiting-room { margin-block: 1.75rem 2.25rem; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .agent-three .terminal-prompt { animation: none; }
+    .agent-waiting-room {
+      margin-block: 1.75rem 2.25rem;
+      border-radius: 14px;
+    }
   }
 </style>
