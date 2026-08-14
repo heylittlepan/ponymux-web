@@ -1,5 +1,6 @@
 import { defineConfig } from "blume";
 import type { ComponentMarkdown } from "blume";
+import { z } from "zod";
 
 const agentWaitingRoomMarkdown: ComponentMarkdown = () => `
 *Illustration: several coding-agent sessions wait quietly in different states while one terminal remains in focus.*
@@ -83,6 +84,16 @@ export default defineConfig({
         },
       },
     ],
+  },
+  frontmatter: {
+    extend: {
+      cover: z
+        .object({
+          dark: z.string(),
+          light: z.string(),
+        })
+        .optional(),
+    },
   },
   ai: {
     markdownComponents: {

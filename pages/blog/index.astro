@@ -6,17 +6,55 @@ import MobileNavGuard from "../../components/MobileNavGuard.astro";
 import ThemePicker from "../../components/ThemePicker.astro";
 import PageFooter from "../_shared/PageFooter.astro";
 
+interface Cover {
+  dark: string;
+  light: string;
+}
+
 const { config } = data;
-const routeById = new Map(data.routes.map((route) => [route.id, route.path]));
+const routeByEntryId = new Map(
+  data.routes.map((route) => [route.entryId, route.path])
+);
+const blogFrontmatter = import.meta.glob("../../docs/blog/*.mdx", {
+  eager: true,
+  import: "frontmatter",
+}) as Record<string, { cover?: Cover }>;
+const coverByEntryId = new Map(
+  Object.entries(blogFrontmatter).map(([path, frontmatter]) => [
+    `blog/${path.split("/").at(-1)}`,
+    frontmatter.cover,
+  ])
+);
+
+const authorNames = (
+  authors: string | { name: string } | (string | { name: string })[] | undefined
+) =>
+  (Array.isArray(authors) ? authors : authors ? [authors] : [])
+    .map((author) => typeof author === "string" ? author : author.name)
+    .join(" and ");
+
 const posts = (await getCollection("docs"))
   .filter((entry) => entry.data.type === "blog" && !entry.data.draft)
   .map((entry) => ({
+    authors: authorNames(entry.data.authors),
+    cover: coverByEntryId.get(entry.id),
     date: entry.data.date,
     description: entry.data.description,
-    href: routeById.get(entry.id),
+    href: routeByEntryId.get(entry.id),
     title: entry.data.title,
   }))
+  .filter((post): post is typeof post & { href: string } => Boolean(post.href))
   .toSorted((a, b) => Number(new Date(b.date)) - Number(new Date(a.date)));
+
+const formatDate = (date: string | undefined) =>
+  date
+    ? new Date(date).toLocaleDateString("en-US", {
+        day: "numeric",
+        month: "short",
+        timeZone: "UTC",
+        year: "numeric",
+      })
+    : "";
 ---
 
 <PageLayout
@@ -49,11 +87,40 @@ const posts = (await getCollection("docs"))
     {posts.length ? (
       <div class="post-list">
         {posts.map((post) => (
-          <article>
-            <time>{post.date && new Date(post.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</time>
-            <div><h2><a href={post.href}>{post.title}</a></h2><p>{post.description}</p></div>
-            <a class="arrow" href={post.href} aria-label={`Read ${post.title}`}>→</a>
-          </article>
+          <a class="post-card" href={post.href}>
+            {post.cover && (
+              <div class="post-cover" aria-hidden="true">
+                <img
+                  class="cover-light"
+                  src={post.cover.light}
+                  alt=""
+                  width="1280"
+                  height="720"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <img
+                  class="cover-dark"
+                  src={post.cover.dark}
+                  alt=""
+                  width="1280"
+                  height="720"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            )}
+            <div class="post-copy">
+              <div class="post-meta">
+                {post.date && <time datetime={new Date(post.date).toISOString()}>{formatDate(post.date)}</time>}
+                {post.date && post.authors && <span aria-hidden="true">·</span>}
+                {post.authors && <span>{post.authors}</span>}
+              </div>
+              <h2>{post.title}</h2>
+              <p>{post.description}</p>
+              <span class="read-note">Read note <span aria-hidden="true">→</span></span>
+            </div>
+          </a>
         ))}
       </div>
     ) : (
@@ -69,16 +136,157 @@ const posts = (await getCollection("docs"))
 </PageLayout>
 
 <style>
-  .blog-shell { width: min(960px, calc(100% - 40px)); margin: 0 auto; padding: 110px 0 130px; }
+  .blog-shell {
+    width: min(960px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 110px 0 130px;
+  }
+
   header { max-width: 790px; }
-  header > p { color: var(--blume-accent); font-size: 12px; font-weight: 750; letter-spacing: .13em; }
-  h1 { margin: 20px 0 28px; color: var(--blume-foreground); font: 750 clamp(48px,7vw,78px)/1 var(--blume-font-display); letter-spacing: -.055em; }
-  .intro { max-width: 650px; color: var(--blume-muted-foreground); font-size: 19px; line-height: 1.65; }
-  .post-list { margin-top: 90px; border-top: 1px solid var(--blume-border); }
-  article { display: grid; grid-template-columns: 150px 1fr auto; gap: 30px; align-items: start; padding: 32px 0; border-bottom: 1px solid var(--blume-border); }
-  time { color: var(--blume-muted-foreground); font: 11px var(--blume-font-mono); text-transform: uppercase; }
-  h2 { margin: 0; font: 700 27px/1.2 var(--blume-font-display); letter-spacing: -.03em; } h2 a { color: var(--blume-foreground); text-decoration: none; }
-  article p { margin: 10px 0 0; color: var(--blume-muted-foreground); line-height: 1.6; }.arrow { color: var(--blume-accent); text-decoration: none; font-size: 24px; }
-  .empty { margin-top: 88px; padding: 64px; border: 1px solid var(--blume-border); border-radius: 22px; background: var(--blume-muted); text-align: center; }.empty > span { color: var(--blume-accent); font-size: 26px; }.empty h2 { margin: 18px 0 10px; font-size: 28px; }.empty p { color: var(--blume-muted-foreground); }.empty a { display:inline-block;margin-top:20px;color:var(--blume-foreground);font-weight:700; }
-  @media(max-width:640px){.blog-shell{padding-top:72px}article{grid-template-columns:1fr;gap:10px}.empty{padding:42px 22px}}
+
+  header > p {
+    color: var(--blume-accent);
+    font-size: 12px;
+    font-weight: 750;
+    letter-spacing: .13em;
+  }
+
+  h1 {
+    margin: 20px 0 28px;
+    color: var(--blume-foreground);
+    font: 750 clamp(48px, 7vw, 78px)/1 var(--blume-font-display);
+    letter-spacing: -.055em;
+  }
+
+  .intro {
+    max-width: 650px;
+    color: var(--blume-muted-foreground);
+    font-size: 19px;
+    line-height: 1.65;
+  }
+
+  .post-list {
+    display: grid;
+    gap: 24px;
+    margin-top: 78px;
+  }
+
+  .post-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(300px, .92fr);
+    overflow: hidden;
+    border: 1px solid var(--blume-border);
+    border-radius: 22px;
+    color: var(--blume-foreground);
+    background: color-mix(in srgb, var(--blume-foreground) 2.5%, var(--blume-background));
+    text-decoration: none;
+    box-shadow: 0 18px 50px color-mix(in srgb, var(--pony-shadow-ink) 7%, transparent);
+    transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+  }
+
+  .post-card:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--blume-accent) 52%, var(--blume-border));
+    box-shadow: 0 22px 60px color-mix(in srgb, var(--pony-shadow-ink) 11%, transparent);
+  }
+
+  .post-cover {
+    align-self: stretch;
+    min-height: 310px;
+    background: var(--blume-muted);
+  }
+
+  .post-cover img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .cover-dark { display: none !important; }
+  :global(:root[data-theme="dark"]) .cover-light { display: none; }
+  :global(:root[data-theme="dark"]) .cover-dark { display: block !important; }
+
+  .post-copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 38px;
+  }
+
+  .post-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    color: var(--blume-muted-foreground);
+    font: 500 11px/1.4 var(--blume-font-mono);
+    letter-spacing: .02em;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    margin: 18px 0 0;
+    color: var(--blume-foreground);
+    font: 700 30px/1.16 var(--blume-font-display);
+    letter-spacing: -.035em;
+  }
+
+  .post-copy > p {
+    margin: 16px 0 0;
+    color: var(--blume-muted-foreground);
+    line-height: 1.65;
+  }
+
+  .read-note {
+    margin-top: 28px;
+    color: var(--blume-accent);
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .read-note span {
+    display: inline-block;
+    margin-inline-start: 5px;
+    transition: transform 180ms ease;
+  }
+
+  .post-card:hover .read-note span { transform: translateX(3px); }
+
+  .empty {
+    margin-top: 88px;
+    padding: 64px;
+    border: 1px solid var(--blume-border);
+    border-radius: 22px;
+    background: var(--blume-muted);
+    text-align: center;
+  }
+
+  .empty > span { color: var(--blume-accent); font-size: 26px; }
+  .empty h2 { margin: 18px 0 10px; font-size: 28px; }
+  .empty p { color: var(--blume-muted-foreground); }
+  .empty a {
+    display: inline-block;
+    margin-top: 20px;
+    color: var(--blume-foreground);
+    font-weight: 700;
+  }
+
+  @media (max-width: 760px) {
+    .blog-shell { padding-top: 72px; }
+
+    .post-card { grid-template-columns: 1fr; }
+
+    .post-cover {
+      min-height: 0;
+      aspect-ratio: 16 / 9;
+    }
+
+    .post-copy { padding: 28px 24px 30px; }
+    h2 { font-size: 27px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .post-card,
+    .read-note span { transition: none; }
+  }
 </style>

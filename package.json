@@ -12,7 +12,8 @@
     "deploy": "bun run build && wrangler deploy"
   },
   "dependencies": {
-    "blume": "^1.4.3"
+    "blume": "^1.4.3",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/node": "^26.2.0",
