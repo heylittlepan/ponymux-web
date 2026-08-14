@@ -7,9 +7,10 @@ interface Author {
 interface Props {
   authors?: Author | string | (Author | string)[];
   date?: Date | string;
+  image?: string;
 }
 
-const { authors, date } = Astro.props;
+const { authors, date, image } = Astro.props;
 const authorList = (Array.isArray(authors) ? authors : authors ? [authors] : [])
   .map((author) => typeof author === "string" ? { name: author } : author)
   .filter((author): author is Author => Boolean(author?.name));
@@ -26,7 +27,28 @@ const displayDate = parsedDate && isoDate
       year: "numeric",
     }).format(parsedDate)
   : undefined;
+
+const site = Astro.site ?? new URL("https://ponymux.com");
+const canonicalPath = Astro.url.pathname.replace(/\/$/u, "");
+const pageId = `${new URL(canonicalPath, site).href.replace(/\/$/u, "")}#page`;
+const articleJsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@id": pageId,
+  "@type": "BlogPosting",
+  ...(authorList.length > 0
+    ? {
+        author: authorList.map((author) => ({
+          "@type": "Person",
+          name: author.name,
+          ...(author.url ? { url: author.url } : {}),
+        })),
+      }
+    : {}),
+  ...(image ? { image: new URL(image, site).href } : {}),
+}).replaceAll("<", "\\u003c");
 ---
+
+<script is:inline type="application/ld+json" set:html={articleJsonLd} />
 
 {
   (authorList.length > 0 || displayDate) && (

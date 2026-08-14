@@ -122,6 +122,12 @@ export default defineConfig({
     sitemap: true,
     robots: true,
     structuredData: true,
+    contentSignals: {
+      aiTrain: false,
+    },
+    x: {
+      handle: "@ponymux",
+    },
     rss: { enabled: true, types: ["blog"] },
     og: {
       enabled: true,
