@@ -33,12 +33,13 @@ This is more about what I learned from trying to make them fit the way I work.
 
 ## It started with too many agents
 
-My terminal used to be a place where I typed commands. Now it’s often a place
-where I start something and leave.
+My terminal used to be mostly a place where I typed commands. Coding agents
+turned more and more of it into a place where I start something, switch away,
+and come back later.
 
-One agent is refactoring a subsystem. Another is running tests. A third stopped
-twenty minutes ago because it needs an approval. Somewhere there’s a session I
-still care about, although I can no longer remember which tab it’s in.
+Once enough of those sessions are running, the problem changes. It becomes less
+about entering commands and more about knowing which session needs attention,
+what each one was for, and how to get back to it.
 
 The obvious answer is a mux. Put more terminals in one place. Keep them visible.
 Split the screen until everything fits.
@@ -54,22 +55,18 @@ Still, I assumed the answer was a better mux. So I went looking.
 
 ## cmux: a better command center
 
-I liked [cmux](https://cmux.com/) almost immediately. It’s native, fast, and the
-vertical sidebar makes sense for agent work. The status indicators are useful.
-The embedded browser and programmable parts are genuinely impressive.
+[cmux](https://cmux.com/) is native and fast, and its vertical sidebar makes
+sense for agent work. It adds status indicators, split panes, an embedded
+browser, and programmability around the terminal. It’s a coherent answer to the
+problem: make more work visible and controllable in one workspace.
 
-It also makes splitting very easy. Maybe a little too easy for me.
+What it didn’t change for me was the spatial part of the job. More panes still
+mean deciding what should stay visible, how much room it gets, and how the
+workspace should be arranged. That’s exactly the work I was hoping a new kind
+of mux would remove.
 
-I’d open a few agents, arrange the panes, put a browser beside them, resize
-things, and end up with a pretty good command center. Then I’d have to manage
-the command center.
-
-Which pane should stay visible? Which one deserves more room? Is that agent
-still working, or am I just looking at old output? A few minutes later I was
-doing layout work instead of whatever I had opened the agents to do.
-
-That’s not a cmux problem. Plenty of people seem to want exactly this. It just
-made something obvious to me: I don’t actually enjoy command centers.
+That’s not a cmux problem. Plenty of people want a command center. I was slowly
+realizing that I don’t.
 
 {/* Draft note: replace the generic layout paragraph with one exact moment
 from using cmux: what was open, how many panes, and what made you give up. */}
@@ -105,8 +102,8 @@ It sits somewhere between a terminal and a full agent development environment.
 That’s a reasonable place to build a product. It’s just not where I wanted to
 end up.
 
-Otty kept showing me useful things a terminal *could* own. I kept having the
-slightly awkward reaction that I wanted it to own less.
+Otty’s direction raises an interesting question: how much of the agent workflow
+should the terminal own? My answer kept drifting toward “less.”
 
 I didn’t want the terminal that could contain the most workflow. I wanted the
 smallest mental model that could support a lot of work.
@@ -180,7 +177,8 @@ part of the day to feel a little calmer.
 
 I don’t know yet how many of those people exist.
 
-I know I’m one of them, and apparently I wanted this badly enough to open Xcode.
-That may have been an overreaction, but here we are.
+I know I’m one of them. I started building PonyMux with Claude Code, which is
+maybe fitting: an agent helping build a terminal for managing agents. Slightly
+circular, but here we are.
 
 [See what PonyMux looks like today](/). I’m building the rest in public.
