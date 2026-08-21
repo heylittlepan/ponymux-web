@@ -153,6 +153,8 @@ test("ignores weak and non-matching date If-Range validators", async () => {
   for (const validator of [
     'W/"etag-PonyMux-0.1.0.dmg"',
     "Fri, 21 Aug 2026 00:00:01 GMT",
+    "2026-08-21T00:00:00Z",
+    "2026-08-21",
   ]) {
     const response = await worker.fetch(
       new Request("https://ponymux.com/update/PonyMux-0.1.0.dmg", {
@@ -174,6 +176,8 @@ test("honors matching strong and date If-Range validators", async () => {
   for (const validator of [
     '"etag-PonyMux-0.1.0.dmg"',
     "Fri, 21 Aug 2026 00:00:00 GMT",
+    "Friday, 21-Aug-26 00:00:00 GMT",
+    "Fri Aug 21 00:00:00 2026",
   ]) {
     const response = await worker.fetch(
       new Request("https://ponymux.com/update/PonyMux-0.1.0.dmg", {

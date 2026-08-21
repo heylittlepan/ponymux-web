@@ -10,6 +10,11 @@ const EVENT_TYPES = new Set(["event", "identify", "performance"]);
 const UPDATE_PATH_PREFIX = "/update/";
 const LATEST_UPDATE_KEY = "latest.json";
 const UPDATE_KEY_PATTERN = /^[A-Za-z0-9][A-Za-z0-9._+-]*$/u;
+const HTTP_DATE_PATTERNS = [
+  /^(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun), \d{2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4} \d{2}:\d{2}:\d{2} GMT$/u,
+  /^(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday), \d{2}-(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)-\d{2} \d{2}:\d{2}:\d{2} GMT$/u,
+  /^(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun) (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (?:\d{2}| \d) \d{2}:\d{2}:\d{2} \d{4}$/u,
+];
 
 function response(status, message, extraHeaders = {}) {
   return new Response(message, {
@@ -74,8 +79,10 @@ function ifRangeMatches(value, object) {
   if (!value) return true;
   if (value.startsWith("W/")) return false;
   if (value.startsWith('"')) return value === object.httpEtag;
+  const dateFormat = HTTP_DATE_PATTERNS.findIndex((pattern) => pattern.test(value));
+  if (dateFormat === -1) return false;
 
-  const date = Date.parse(value);
+  const date = Date.parse(dateFormat === 2 ? `${value} GMT` : value);
   return Number.isFinite(date) && new Date(date).toUTCString() === object.uploaded.toUTCString();
 }
 
