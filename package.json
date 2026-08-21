@@ -8,6 +8,7 @@
     "doctor": "blume doctor",
     "check": "blume check",
     "audit": "blume audit",
+    "test:worker": "node --test worker/index.test.js",
     "preview": "bun run build && wrangler dev",
     "deploy": "bun run build && wrangler deploy"
   },

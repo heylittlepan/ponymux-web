@@ -39,8 +39,10 @@ const { config } = data;
           sessions, and one strong opinion: you do not need more split panes.
         </p>
         <div class="actions">
-          <a class="primary" href="#why">See the point of view</a>
-          <a class="secondary" href="/blog">Follow the build <span>→</span></a>
+          <form action="/download" method="get">
+            <button class="primary" type="submit">Download for macOS</button>
+          </form>
+          <a class="secondary" href="#why">See the point of view <span>→</span></a>
         </div>
       </div>
 
@@ -194,8 +196,9 @@ const { config } = data;
   h1 em { color: var(--blume-accent); font-style: normal; }
   .lede { max-width: 690px; margin: 0 auto; color: var(--blume-muted-foreground); font-size: clamp(18px, 2vw, 22px); line-height: 1.55; }
   .actions { display: flex; justify-content: center; gap: 14px; margin-top: 34px; }
-  .primary, .secondary { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 20px; border-radius: 13px; font-weight: 700; text-decoration: none; }
-  .primary { color: var(--pony-action-ink); background: var(--pony-action); box-shadow: 0 10px 28px color-mix(in srgb, var(--pony-action) 24%, transparent); }
+  .actions form { margin: 0; }
+  .primary, .secondary { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 20px; border-radius: 13px; font: 700 1rem var(--blume-font-body); text-decoration: none; }
+  .primary { border: 0; color: var(--pony-action-ink); background: var(--pony-action); box-shadow: 0 10px 28px color-mix(in srgb, var(--pony-action) 24%, transparent); cursor: pointer; }
   .primary:hover { background: color-mix(in srgb, var(--pony-action) 88%, var(--pony-fg)); transform: translateY(-1px); }
   .secondary { color: var(--blume-foreground); border: 1px solid var(--blume-border); background: color-mix(in srgb, var(--blume-background) 75%, transparent); }
   .secondary span { margin-left: 9px; }
@@ -236,6 +239,6 @@ const { config } = data;
     .app-window { height: 560px; }.app-body{grid-template-columns:56px 240px 1fr}.terminal-copy{padding:26px 22px;font-size:11px}.memory{left:18px;right:18px}.principle.large{grid-template-columns:1fr;gap:32px}.closing{grid-template-columns:auto 1fr}.closing .primary{grid-column:1/-1}.comparison{grid-template-columns:1fr}.arrow{padding:14px;transform:rotate(90deg)}
   }
   @media (max-width: 700px) {
-    .hero{padding-top:64px}.actions{flex-direction:column}.app-window{height:540px}.app-body{grid-template-columns:52px 1fr}.terminal{display:none}.product-theme-note{max-width:300px;flex-wrap:wrap;justify-content:center;line-height:1.5}.principles{grid-template-columns:1fr}.principle.large{grid-column:auto}.comparison-item{padding:18px}.manifesto{padding:100px 0}.closing{grid-template-columns:1fr;text-align:center}.closing-mark{margin:auto}.closing .primary{grid-column:auto}.reactions span{width:50px;height:50px}.sessions{border-right:0}
+    .hero{padding-top:64px}.actions{flex-direction:column}.actions form,.actions .primary,.actions .secondary{width:100%}.app-window{height:540px}.app-body{grid-template-columns:52px 1fr}.terminal{display:none}.product-theme-note{max-width:300px;flex-wrap:wrap;justify-content:center;line-height:1.5}.principles{grid-template-columns:1fr}.principle.large{grid-column:auto}.comparison-item{padding:18px}.manifesto{padding:100px 0}.closing{grid-template-columns:1fr;text-align:center}.closing-mark{margin:auto}.closing .primary{grid-column:auto}.reactions span{width:50px;height:50px}.sessions{border-right:0}
   }
 </style>
