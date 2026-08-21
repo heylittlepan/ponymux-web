@@ -72,12 +72,11 @@ function etagMatches(value, etag) {
 
 function ifRangeMatches(value, object) {
   if (!value) return true;
-  if (value.startsWith('"') || value.startsWith("W/")) {
-    return value.replace(/^W\//u, "") === object.httpEtag;
-  }
+  if (value.startsWith("W/")) return false;
+  if (value.startsWith('"')) return value === object.httpEtag;
 
   const date = Date.parse(value);
-  return Number.isFinite(date) && object.uploaded.valueOf() <= date;
+  return Number.isFinite(date) && new Date(date).toUTCString() === object.uploaded.toUTCString();
 }
 
 function updateHeaders(object, key, range) {

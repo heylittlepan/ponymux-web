@@ -38,6 +38,9 @@ For local development, populate Wrangler's local R2 storage before starting the
 preview server:
 
 ```sh
+npx wrangler r2 object put ponymux-update/PonyMux-0.1.0.dmg \
+  --file /tmp/PonyMux-0.1.0.dmg \
+  --local
 npx wrangler r2 object put ponymux-update/appcast.xml \
   --file /tmp/test-appcast.xml \
   --local
