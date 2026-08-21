@@ -12,9 +12,18 @@ const LATEST_UPDATE_KEY = "latest.json";
 const UPDATE_KEY_PATTERN = /^[A-Za-z0-9][A-Za-z0-9._+-]*$/u;
 const HTTP_DATE_PATTERNS = [
   /^(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun), \d{2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4} \d{2}:\d{2}:\d{2} GMT$/u,
-  /^(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday), \d{2}-(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)-\d{2} \d{2}:\d{2}:\d{2} GMT$/u,
-  /^(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun) (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (?:\d{2}| \d) \d{2}:\d{2}:\d{2} \d{4}$/u,
+  /^(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday), (\d{2})-(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)-(\d{2}) (\d{2}:\d{2}:\d{2}) GMT$/u,
+  /^(Mon|Tue|Wed|Thu|Fri|Sat|Sun) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (\d{2}| \d) (\d{2}:\d{2}:\d{2}) (\d{4})$/u,
 ];
+const RFC850_WEEKDAYS = {
+  Monday: "Mon",
+  Tuesday: "Tue",
+  Wednesday: "Wed",
+  Thursday: "Thu",
+  Friday: "Fri",
+  Saturday: "Sat",
+  Sunday: "Sun",
+};
 
 function response(status, message, extraHeaders = {}) {
   return new Response(message, {
@@ -75,15 +84,35 @@ function etagMatches(value, etag) {
     .some((candidate) => candidate === "*" || candidate === etag);
 }
 
+function parseHttpDate(value) {
+  const matches = HTTP_DATE_PATTERNS.map((pattern) => pattern.exec(value));
+  const dateFormat = matches.findIndex(Boolean);
+  if (dateFormat === -1) return null;
+
+  const timestamp = Date.parse(dateFormat === 2 ? `${value} GMT` : value);
+  if (!Number.isFinite(timestamp)) return null;
+
+  let canonical = value;
+  if (dateFormat === 1) {
+    const [, weekday, day, month, year, time] = matches[dateFormat];
+    const fullYear = String(new Date(timestamp).getUTCFullYear());
+    if (!fullYear.endsWith(year)) return null;
+    canonical = `${RFC850_WEEKDAYS[weekday]}, ${day} ${month} ${fullYear} ${time} GMT`;
+  } else if (dateFormat === 2) {
+    const [, weekday, month, day, time, year] = matches[dateFormat];
+    canonical = `${weekday}, ${day.trim().padStart(2, "0")} ${month} ${year} ${time} GMT`;
+  }
+
+  return new Date(timestamp).toUTCString() === canonical ? timestamp : null;
+}
+
 function ifRangeMatches(value, object) {
   if (!value) return true;
   if (value.startsWith("W/")) return false;
   if (value.startsWith('"')) return value === object.httpEtag;
-  const dateFormat = HTTP_DATE_PATTERNS.findIndex((pattern) => pattern.test(value));
-  if (dateFormat === -1) return false;
 
-  const date = Date.parse(dateFormat === 2 ? `${value} GMT` : value);
-  return Number.isFinite(date) && new Date(date).toUTCString() === object.uploaded.toUTCString();
+  const date = parseHttpDate(value);
+  return date !== null && new Date(date).toUTCString() === object.uploaded.toUTCString();
 }
 
 function updateHeaders(object, key, range) {

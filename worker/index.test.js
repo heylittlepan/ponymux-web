@@ -172,6 +172,35 @@ test("ignores weak and non-matching date If-Range validators", async () => {
   }
 });
 
+test("rejects semantically invalid If-Range HTTP dates", async () => {
+  for (const { validator, uploaded } of [
+    {
+      validator: "Thu, 21 Aug 2026 00:00:00 GMT",
+      uploaded: "2026-08-21T00:00:00Z",
+    },
+    {
+      validator: "Wed, 31 Jun 2026 00:00:00 GMT",
+      uploaded: "2026-07-01T00:00:00Z",
+    },
+  ]) {
+    const env = createEnv();
+    env.UPDATES.entries.get("PonyMux-0.1.0.dmg").metadata.uploaded = new Date(uploaded);
+    const response = await worker.fetch(
+      new Request("https://ponymux.com/update/PonyMux-0.1.0.dmg", {
+        headers: {
+          Range: "bytes=2-5",
+          "If-Range": validator,
+        },
+      }),
+      env
+    );
+
+    assert.equal(response.status, 200);
+    assert.equal(response.headers.get("Content-Range"), null);
+    assert.equal(await response.text(), "0123456789");
+  }
+});
+
 test("honors matching strong and date If-Range validators", async () => {
   for (const validator of [
     '"etag-PonyMux-0.1.0.dmg"',
