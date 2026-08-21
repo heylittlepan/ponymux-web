@@ -7,6 +7,9 @@ const SITE_HOSTNAME = "ponymux.com";
 const SITE_ORIGIN = `https://${SITE_HOSTNAME}`;
 const MAX_EVENT_BYTES = 64 * 1024;
 const EVENT_TYPES = new Set(["event", "identify", "performance"]);
+const UPDATE_PATH_PREFIX = "/update/";
+const LATEST_UPDATE_KEY = "latest.json";
+const UPDATE_KEY_PATTERN = /^[A-Za-z0-9][A-Za-z0-9._+-]*$/u;
 
 function response(status, message, extraHeaders = {}) {
   return new Response(message, {
@@ -21,6 +24,173 @@ function response(status, message, extraHeaders = {}) {
 
 function methodNotAllowed(allowed) {
   return response(405, "Method not allowed", { Allow: allowed.join(", ") });
+}
+
+function updateKeyFromPath(pathname) {
+  let key;
+  try {
+    key = decodeURIComponent(pathname.slice(UPDATE_PATH_PREFIX.length));
+  } catch {
+    return null;
+  }
+
+  return UPDATE_KEY_PATTERN.test(key) ? key : null;
+}
+
+function parseByteRange(value, size) {
+  const match = /^bytes=(\d*)-(\d*)$/u.exec(value);
+  if (!match || (!match[1] && !match[2])) return null;
+
+  if (match[1]) {
+    const offset = Number(match[1]);
+    const requestedEnd = match[2] ? Number(match[2]) : size - 1;
+    if (
+      !Number.isSafeInteger(offset) ||
+      !Number.isSafeInteger(requestedEnd) ||
+      offset >= size ||
+      requestedEnd < offset
+    ) {
+      return null;
+    }
+
+    const end = Math.min(requestedEnd, size - 1);
+    return { offset, length: end - offset + 1 };
+  }
+
+  const suffix = Number(match[2]);
+  if (!Number.isSafeInteger(suffix) || suffix <= 0 || size === 0) return null;
+  const length = Math.min(suffix, size);
+  return { offset: size - length, length };
+}
+
+function etagMatches(value, etag) {
+  return value
+    .split(",")
+    .map((candidate) => candidate.trim().replace(/^W\//u, ""))
+    .some((candidate) => candidate === "*" || candidate === etag);
+}
+
+function ifRangeMatches(value, object) {
+  if (!value) return true;
+  if (value.startsWith('"') || value.startsWith("W/")) {
+    return value.replace(/^W\//u, "") === object.httpEtag;
+  }
+
+  const date = Date.parse(value);
+  return Number.isFinite(date) && object.uploaded.valueOf() <= date;
+}
+
+function updateHeaders(object, key, range) {
+  const headers = new Headers();
+  object.writeHttpMetadata(headers);
+  headers.set("Accept-Ranges", "bytes");
+  headers.set("ETag", object.httpEtag);
+  headers.set("Last-Modified", object.uploaded.toUTCString());
+  headers.set("X-Content-Type-Options", "nosniff");
+
+  if (range) {
+    headers.set("Content-Length", String(range.length));
+    headers.set(
+      "Content-Range",
+      `bytes ${range.offset}-${range.offset + range.length - 1}/${object.size}`
+    );
+  } else {
+    headers.set("Content-Length", String(object.size));
+  }
+
+  if (key === "appcast.xml") {
+    headers.set("Content-Type", "application/rss+xml; charset=utf-8");
+    headers.set("Cache-Control", "no-cache, max-age=0, must-revalidate");
+  } else if (key === LATEST_UPDATE_KEY) {
+    headers.set("Content-Type", "application/json; charset=utf-8");
+    headers.set("Cache-Control", "no-store");
+  } else if (key.endsWith(".dmg")) {
+    headers.set("Content-Type", "application/x-apple-diskimage");
+    headers.set("Content-Disposition", `attachment; filename="${key}"`);
+    headers.set("Cache-Control", "public, max-age=31536000, immutable");
+  } else {
+    headers.set("Content-Type", "application/octet-stream");
+    headers.set("Cache-Control", "public, max-age=31536000, immutable");
+  }
+
+  return headers;
+}
+
+async function serveUpdateAsset(request, env, pathname) {
+  if (request.method !== "GET" && request.method !== "HEAD") {
+    return methodNotAllowed(["GET", "HEAD"]);
+  }
+
+  const key = updateKeyFromPath(pathname);
+  if (!key) return response(404, "Not found");
+
+  const rangeHeader = request.method === "GET" ? request.headers.get("Range") : null;
+  const ifNoneMatch = request.headers.get("If-None-Match");
+  let metadata = null;
+
+  if (request.method === "HEAD" || rangeHeader || ifNoneMatch) {
+    metadata = await env.UPDATES.head(key);
+    if (!metadata) return response(404, "Not found");
+
+    if (ifNoneMatch && etagMatches(ifNoneMatch, metadata.httpEtag)) {
+      const headers = updateHeaders(metadata, key);
+      headers.delete("Content-Length");
+      return new Response(null, { status: 304, headers });
+    }
+
+    if (request.method === "HEAD") {
+      return new Response(null, { status: 200, headers: updateHeaders(metadata, key) });
+    }
+  }
+
+  let range = null;
+  if (rangeHeader && ifRangeMatches(request.headers.get("If-Range"), metadata)) {
+    range = parseByteRange(rangeHeader, metadata.size);
+    if (!range) {
+      return response(416, "Range not satisfiable", {
+        "Accept-Ranges": "bytes",
+        "Content-Range": `bytes */${metadata.size}`,
+      });
+    }
+  }
+
+  const object = await env.UPDATES.get(key, range ? { range } : undefined);
+  if (!object) return response(404, "Not found");
+
+  return new Response(object.body, {
+    status: range ? 206 : 200,
+    headers: updateHeaders(object, key, range),
+  });
+}
+
+async function redirectToLatestDownload(request, env) {
+  if (request.method !== "GET" && request.method !== "HEAD") {
+    return methodNotAllowed(["GET", "HEAD"]);
+  }
+
+  const latest = await env.UPDATES.get(LATEST_UPDATE_KEY);
+  if (!latest) return response(503, "Download not available yet");
+
+  let manifest;
+  try {
+    manifest = await latest.json();
+  } catch {
+    return response(503, "Download not available yet");
+  }
+
+  const dmg = manifest?.dmg;
+  if (typeof dmg !== "string" || !UPDATE_KEY_PATTERN.test(dmg) || !dmg.endsWith(".dmg")) {
+    return response(503, "Download not available yet");
+  }
+
+  const location = new URL(`${UPDATE_PATH_PREFIX}${encodeURIComponent(dmg)}`, request.url);
+  return new Response(null, {
+    status: 302,
+    headers: {
+      "Cache-Control": "no-store",
+      Location: location.href,
+    },
+  });
 }
 
 function isTrustedBrowserRequest(request) {
@@ -181,6 +351,12 @@ export default {
     if (pathname === TRACKER_PATH) return proxyTracker(request);
     if (pathname === COLLECT_PATH) return proxyCollect(request);
     if (pathname.startsWith("/p/")) return response(404, "Not found");
+    if (pathname.startsWith(UPDATE_PATH_PREFIX)) {
+      return serveUpdateAsset(request, env, pathname);
+    }
+    if (pathname === "/download" || pathname === "/download/") {
+      return redirectToLatestDownload(request, env);
+    }
 
     return env.ASSETS.fetch(request);
   },
